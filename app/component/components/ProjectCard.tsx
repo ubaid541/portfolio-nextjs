@@ -13,7 +13,8 @@ export interface Project {
     description: string;
     techStack: string[];
     imageUrl: string;
-    link: string;
+    link?: string | null;
+
     githubLink: string | null;
   }
   
@@ -75,7 +76,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               <Github className="w-4 h-4" /> Code
             </Button>
           )}
-          {project.link && (
+          {project.link && project.link !== "" && (
             <Button 
               size="sm" 
               className="gap-2 w-full bg-white text-black hover:bg-gray-200"

@@ -104,38 +104,80 @@ const MOCK_PROJECTS: Project[] = [
     id: 1,
     title: "SaaS CRM Platform",
     description: "A multi-tenant SaaS CRM with subscription management, payment processing, and personalized client portals.",
-    techStack: ["React.js", "Redux", "Node.js", "REST APIs"],
-    imageUrl: "https://placehold.co/600x400/1e293b/cbd5e1?text=SaaS+CRM",
-    link: "#",
+    techStack: ["React.js","tailwind css", "MUI", "Node.js", "REST APIs"],
+    // imageUrl: "https://placehold.co/600x400/1e293b/cbd5e1?text=SaaS+CRM",
+    imageUrl: "/portfolio_images/dodealcrm_main.png",
+    link: "",
     githubLink: null
   },
   {
     id: 2,
     title: "Custom CMS",
     description: "Secure, API-driven Content Management System for centralized management of multiple client websites.",
-    techStack: ["React.js", "Material UI", "Express.js"],
-    imageUrl: "https://placehold.co/600x400/1e293b/cbd5e1?text=Custom+CMS",
-    link: "#",
+    techStack: ["React.js","tailwind css", "Material UI","Restful APIs"],
+    // imageUrl: "https://placehold.co/600x400/1e293b/cbd5e1?text=Custom+CMS",
+    imageUrl: "/portfolio_images/cms.png",
+    link: "",
     githubLink: null
   },
   {
     id: 3,
-    title: "E-commerce Storefront",
-    description: "Modern, responsive frontend for an existing e-commerce platform with cart and checkout functionality.",
-    techStack: ["React.js", "Bootstrap", "AbanteCart API"],
-    imageUrl: "https://placehold.co/600x400/1e293b/cbd5e1?text=E-commerce",
-    link: "#",
+    title: "Dodeal website",
+    description: "Its the official website for the crm throught which user can buy the crm and go through complete onboarding process.",
+    techStack: ["React.js","tailwind css", "Material UI","Restful APIs"],
+    // imageUrl: "https://placehold.co/600x400/1e293b/cbd5e1?text=Custom+CMS",
+    imageUrl: "/portfolio_images/dodeal_web.png",
+    link: "",
     githubLink: null
   },
   {
     id: 4,
-    title: "Employee Attendance System",
-    description: "Internal tool for tracking attendance, managing salaries, and generating automated PDF reports.",
-    techStack: ["React.js", "Node.js", "PDF Generation"],
-    imageUrl: "https://placehold.co/600x400/1e293b/cbd5e1?text=Attendance+System",
-    link: "#",
+    title: "Dodeal cms",
+    description: "Its a complete cms to manager the clients , users ,payments and other other onbooarding options.",
+    techStack: ["React.js","tailwind css", "Material UI","Restful APIs"],
+    // imageUrl: "https://placehold.co/600x400/1e293b/cbd5e1?text=Custom+CMS",
+    imageUrl: "/portfolio_images/dodeal_cms.png",
+    link: "",
     githubLink: null
-  }
+  },
+  {
+    id: 5,
+    title: "Apraj ",
+    description: "These website is for the real estate company to show the property to the clients and users to buy the property.",
+    techStack: ["Nextjs","tailwind css", "Material UI","Restful APIs"],
+    // imageUrl: "https://placehold.co/600x400/1e293b/cbd5e1?text=Custom+CMS",
+    imageUrl: "/portfolio_images/apraj.png",
+    link: "",
+    githubLink: null
+  },
+  {
+    id: 6,
+    title: "Arkan Tech ",
+    description: "Its the official website for tech services company.",
+    techStack: ["Nextjs","tailwind css", "Material UI","Restful APIs"],
+    // imageUrl: "https://placehold.co/600x400/1e293b/cbd5e1?text=Custom+CMS",
+    imageUrl: "/portfolio_images/apraj.png",
+    link: "https://arkantech.com/",
+    githubLink: null
+  },
+  // {
+  //   id: 3,
+  //   title: "E-commerce Storefront",
+  //   description: "Modern, responsive frontend for an existing e-commerce platform with cart and checkout functionality.",
+  //   techStack: ["React.js", "Bootstrap", "AbanteCart API"],
+  //   imageUrl: "https://placehold.co/600x400/1e293b/cbd5e1?text=E-commerce",
+  //   link: "#",
+  //   githubLink: null
+  // },
+  // {
+  //   id: 4,
+  //   title: "Employee Attendance System",
+  //   description: "Internal tool for tracking attendance, managing salaries, and generating automated PDF reports.",
+  //   techStack: ["React.js", "Node.js", "PDF Generation"],
+  //   imageUrl: "https://placehold.co/600x400/1e293b/cbd5e1?text=Attendance+System",
+  //   link: "#",
+  //   githubLink: null
+  // }
 ];
 
 const MOCK_POSTS: Post[] = [
