@@ -72,11 +72,11 @@ export default function Navbar() {
           
           <div className="h-4 w-px bg-border mx-2"></div>
           
-          <Link href="/blog">
+          {/* <Link href="/blog">
             <Button variant="ghost" className="text-sm font-medium">
               Blog
             </Button>
-          </Link>
+          </Link> */}
           
           <Button 
             className="rounded-full px-6 bg-white text-black hover:bg-gray-200"
@@ -119,9 +119,9 @@ export default function Navbar() {
                 Home
               </Link>
             )}
-            <Link href="/blog" onClick={() => setIsOpen(false)} className="text-lg font-medium text-muted-foreground hover:text-primary py-2 border-b border-border/50">
+            {/* <Link href="/blog" onClick={() => setIsOpen(false)} className="text-lg font-medium text-muted-foreground hover:text-primary py-2 border-b border-border/50">
               Blog
-            </Link>
+            </Link> */}
             <Button className="w-full mt-2" onClick={() => window.open("/resume.pdf", "_blank")}>
               Download Resume
             </Button>
