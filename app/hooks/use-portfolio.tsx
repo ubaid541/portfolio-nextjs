@@ -152,7 +152,7 @@ const MOCK_POSTS: Post[] = [
 // --- HOOKS ---
 
 export function useSkills() {
-    return MOCK_SKILLS
+    return {skills:MOCK_SKILLS,isLoading:false}
 //   return useQuery({
 //     queryKey: ["/api/skills"],
 //     queryFn: async () => MOCK_SKILLS,
@@ -160,7 +160,7 @@ export function useSkills() {
 }
 
 export function useExperience() {
-    return MOCK_EXPERIENCE
+    return {experiences:MOCK_EXPERIENCE,isLoading:false}
 //   return useQuery({
 //     queryKey: ["/api/experience"],
 //     queryFn: async () => MOCK_EXPERIENCE,
@@ -168,7 +168,7 @@ export function useExperience() {
 }
 
 export function useProjects() {
-    return MOCK_PROJECTS
+    return {projects:MOCK_PROJECTS,isLoading:false}
 //   return useQuery({
 //     queryKey: ["/api/projects"],
 //     queryFn: async () => MOCK_PROJECTS,

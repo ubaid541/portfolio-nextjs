@@ -80,7 +80,7 @@ function Hero() {
                   variant="outline" 
                   size="lg" 
                   className="border-white/20 hover:bg-white/5 h-14 rounded-full text-base"
-                  onClick={() => window.open("/resume.pdf", "_blank")}
+                  onClick={() => window.open("/ubaid_ur_rehman_resume.pdf", "_blank")}
                 >
                   Download CV <Download className="ml-2 w-5 h-5" />
                 </Button>
@@ -189,7 +189,8 @@ function About() {
 
 // === SKILLS SECTION ===
 function Skills() {
-  const { data: skills, isLoading } = useSkills();
+  const {  skills, isLoading } = useSkills();
+  console.log("skills :",skills)
 
   return (
     <section id="skills" className="py-24">
@@ -252,7 +253,8 @@ function Skills() {
 
 // === EXPERIENCE SECTION ===
 function Experience() {
-  const { data: experiences, isLoading } = useExperience();
+  const {  experiences, isLoading } = useExperience();
+  console.log("experience: ",experiences)
 
   return (
     <section id="experience" className="py-24 bg-secondary/20">
@@ -314,7 +316,7 @@ function Experience() {
 
 // === PROJECTS SECTION ===
 function Projects() {
-  const { data: projects, isLoading } = useProjects();
+  const {  projects, isLoading } = useProjects();
 
   return (
     <section id="projects" className="py-24">

@@ -80,7 +80,7 @@ export default function Navbar() {
           
           <Button 
             className="rounded-full px-6 bg-white text-black hover:bg-gray-200"
-            onClick={() => window.open("/resume.pdf", "_blank")}
+            onClick={() => window.open("/ubaid_ur_rehman_resume.pdf", "_blank")}
           >
             Resume
           </Button>
