@@ -1,46 +1,24 @@
-"use client";
-import Image from "next/image";
-import Navbar from "./component/Navbar";
-
-// export default function Home() {
-//   return (
-
-//     <div className="min-h-screen bg-background">
-//       <Navbar/>
-//       <main>
-//         <Hero />
-//          <About />
-//         <Skills />
-//         <Experience />
-//         <Projects />
-//         <Contact /> 
-//       </main>
-//       <Footer />
-// </div>
-//   );
-// }
-
 import { useEffect } from "react";
-// import Navbar from "@/components/Navbar";
-import Footer from "./component/components/Footer";
-import SectionHeader from "./component/components/SectionHeader";
-import ProjectCard from "./component/components/ProjectCard";
-import { Button } from "./component/components/ui/Button";
-import { Input } from "./component/components/ui/Input";
-import { Textarea } from "./component/components/ui/Textarea";
-import { Card, CardContent, CardHeader } from "./component/components/ui/Card";
-import { Badge } from "./component/components/ui/Badge";
-// import { useSkills, useExperience, useProjects, useContactMutation } from "./hooks/use-portfolio";
-import { useSkills, useExperience, useProjects } from "./hooks/use-portfolio";
+// import Navbar from "./components/Navbar";
+import Navbar from "./Navbar";
+import Footer from "./components/Footer";
+import SectionHeader from "./components/SectionHeader";
+import ProjectCard from "./components/ProjectCard";
+// import { Button } from "./components/ui/button";
+import { Button } from "./components/ui/Button";
+import { Input } from "./components/ui/Input";
+import { Textarea } from "./components/ui/Textarea";
+import { Card, CardContent, CardHeader } from "./components/ui/Card";
+import { Badge } from "./components/ui/Badge";
+import { useSkills, useExperience, useProjects, useContactMutation } from "../hooks/use-portfolio";
 import { ArrowRight, Download, Send, Terminal, Server, Database, Globe, Calendar, MapPin, Briefcase, Mail } from "lucide-react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-// import { insertMessageSchema } from "@shared/schema";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./component/components/ui/Form";
-// import { useToast } from "@/hooks/use-toast";
-import { useToast } from "./hooks/use-toast";
+import { insertMessageSchema } from "@shared/schema";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { useToast } from "@/hooks/use-toast";
 
 // === HERO SECTION ===
 function Hero() {
@@ -208,7 +186,7 @@ function Skills() {
           </div>
         ) : (
           <div className="grid md:grid-cols-3 gap-8">
-            {skills?.map((skillGroup , idx) => (
+            {skills?.map((skillGroup, idx) => (
               <motion.div
                 key={skillGroup.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -229,7 +207,7 @@ function Skills() {
                   </CardHeader>
                   <CardContent>
                     <div className="flex flex-wrap gap-2">
-                      {skillGroup.items?.map((item ) => (
+                      {skillGroup.items?.map((item) => (
                         <Badge 
                           key={item} 
                           variant="secondary" 
@@ -346,36 +324,35 @@ function Projects() {
 // === CONTACT SECTION ===
 function Contact() {
   const { toast } = useToast();
-  // const mutation = useContactMutation();
+  const mutation = useContactMutation();
   
-  // const form = useForm<z.infer<typeof insertMessageSchema>>({
-  //   resolver: zodResolver(insertMessageSchema),
-  //   defaultValues: {
-  //     name: "",
-  //     email: "",
-  //     message: "",
-  //   },
-  // });
+  const form = useForm<z.infer<typeof insertMessageSchema>>({
+    resolver: zodResolver(insertMessageSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      message: "",
+    },
+  });
 
-
-  // function onSubmit(values: z.infer<typeof insertMessageSchema>) {
-  //   mutation.mutate(values, {
-  //     onSuccess: () => {
-  //       toast({
-  //         title: "Message Sent!",
-  //         description: "Thanks for reaching out. I'll get back to you soon.",
-  //       });
-  //       form.reset();
-  //     },
-  //     onError: (error) => {
-  //       toast({
-  //         title: "Error",
-  //         description: error.message,
-  //         variant: "destructive",
-  //       });
-  //     },
-  //   });
-  // }
+  function onSubmit(values: z.infer<typeof insertMessageSchema>) {
+    mutation.mutate(values, {
+      onSuccess: () => {
+        toast({
+          title: "Message Sent!",
+          description: "Thanks for reaching out. I'll get back to you soon.",
+        });
+        form.reset();
+      },
+      onError: (error) => {
+        toast({
+          title: "Error",
+          description: error.message,
+          variant: "destructive",
+        });
+      },
+    });
+  }
 
   return (
     <section id="contact" className="py-24 bg-secondary/20">
@@ -422,12 +399,10 @@ function Contact() {
             </div>
             
             <div className="bg-background/50 p-6 rounded-xl border border-border/50">
-              {/* <Form {...form}> */}
-              <Form>
-                {/* <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6"> */}
-                <form className="space-y-6">
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
-                    // control={form.control}
+                    control={form.control}
                     name="name"
                     render={({ field }) => (
                       <FormItem>
@@ -440,7 +415,7 @@ function Contact() {
                     )}
                   />
                   <FormField
-                    // control={form.control}
+                    control={form.control}
                     name="email"
                     render={({ field }) => (
                       <FormItem>
@@ -453,7 +428,7 @@ function Contact() {
                     )}
                   />
                   <FormField
-                    // control={form.control}
+                    control={form.control}
                     name="message"
                     render={({ field }) => (
                       <FormItem>
@@ -472,11 +447,10 @@ function Contact() {
                   <Button 
                     type="submit" 
                     className="w-full h-12 text-base font-medium"
-                    // disabled={mutation.isPending}
+                    disabled={mutation.isPending}
                   >
-                    {/* {mutation.isPending ? "Sending..." : "Send Message"}
-                    {!mutation.isPending && <Send className="ml-2 w-4 h-4" />} */}
-                    "Send Message"
+                    {mutation.isPending ? "Sending..." : "Send Message"}
+                    {!mutation.isPending && <Send className="ml-2 w-4 h-4" />}
                   </Button>
                 </form>
               </Form>
@@ -504,4 +478,3 @@ export default function Home() {
     </div>
   );
 }
-
