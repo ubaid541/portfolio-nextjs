@@ -222,8 +222,8 @@ function Skills() {
                     <div className="flex items-center gap-3 mb-2">
                       <div className="p-2 bg-primary/10 rounded-lg">
                         {skillGroup.category === "Frontend" && <Globe className="w-5 h-5 text-primary" />}
-                        {skillGroup.category === "Backend" && <Server className="w-5 h-5 text-primary" />}
-                        {skillGroup.category === "Tools" && <Terminal className="w-5 h-5 text-primary" />}
+                        {skillGroup.category === "Backend & APIs" && <Server className="w-5 h-5 text-primary" />}
+                        {skillGroup.category === "Tools & Platforms" && <Terminal className="w-5 h-5 text-primary" />}
                       </div>
                       <h3 className="font-heading font-bold text-xl">{skillGroup.category}</h3>
                     </div>
@@ -379,115 +379,115 @@ function Contact() {
   //   });
   // }
 
-  return (
-    <section id="contact" className="py-24 bg-secondary/20">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="max-w-4xl mx-auto">
-          <SectionHeader 
-            title="Get In Touch" 
-            subtitle="Have a project in mind or want to say hi? I'd love to hear from you." 
-            align="center"
-          />
+  // return (
+  //   <section id="contact" className="py-24 bg-secondary/20">
+  //     <div className="container mx-auto px-4 md:px-6">
+  //       <div className="max-w-4xl mx-auto">
+  //         <SectionHeader 
+  //           title="Get In Touch" 
+  //           subtitle="Have a project in mind or want to say hi? I'd love to hear from you." 
+  //           align="center"
+  //         />
           
-          <div className="grid md:grid-cols-2 gap-12 bg-card border border-border/50 rounded-2xl p-8 md:p-12 shadow-2xl">
-            <div className="space-y-8">
-              <div>
-                <h3 className="text-2xl font-bold font-heading mb-4">Contact Information</h3>
-                <p className="text-muted-foreground">
-                  Feel free to reach out via email or connect with me on social media. I'm always open to discussing new projects, creative ideas, or opportunities.
-                </p>
-              </div>
+  //         <div className="grid md:grid-cols-2 gap-12 bg-card border border-border/50 rounded-2xl p-8 md:p-12 shadow-2xl">
+  //           <div className="space-y-8">
+  //             <div>
+  //               <h3 className="text-2xl font-bold font-heading mb-4">Contact Information</h3>
+  //               <p className="text-muted-foreground">
+  //                 Feel free to reach out via email or connect with me on social media. I'm always open to discussing new projects, creative ideas, or opportunities.
+  //               </p>
+  //             </div>
               
-              <div className="space-y-4">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-primary/10 rounded-full text-primary">
-                    <Mail className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground">Email</p>
-                    <a href="mailto:ubaidrehmanse@gmail.com" className="text-lg font-medium hover:text-primary transition-colors">
-                      ubaidrehmanse@gmail.com
-                    </a>
-                  </div>
-                </div>
+  //             <div className="space-y-4">
+  //               <div className="flex items-center gap-4">
+  //                 <div className="p-3 bg-primary/10 rounded-full text-primary">
+  //                   <Mail className="w-5 h-5" />
+  //                 </div>
+  //                 <div>
+  //                   <p className="text-sm font-medium text-muted-foreground">Email</p>
+  //                   <a href="mailto:ubaidrehmanse@gmail.com" className="text-lg font-medium hover:text-primary transition-colors">
+  //                     ubaidrehmanse@gmail.com
+  //                   </a>
+  //                 </div>
+  //               </div>
                 
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-primary/10 rounded-full text-primary">
-                    <MapPin className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground">Location</p>
-                    <p className="text-lg font-medium">Remote / Pakistan</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+  //               <div className="flex items-center gap-4">
+  //                 <div className="p-3 bg-primary/10 rounded-full text-primary">
+  //                   <MapPin className="w-5 h-5" />
+  //                 </div>
+  //                 <div>
+  //                   <p className="text-sm font-medium text-muted-foreground">Location</p>
+  //                   <p className="text-lg font-medium">Remote / Pakistan</p>
+  //                 </div>
+  //               </div>
+  //             </div>
+  //           </div>
             
-            <div className="bg-background/50 p-6 rounded-xl border border-border/50">
-              {/* <Form {...form}> */}
-              <Form>
-                {/* <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6"> */}
-                <form className="space-y-6">
-                  <FormField
-                    // control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Name</FormLabel>
-                        <FormControl>
-                          <Input placeholder="John Doe" {...field} className="bg-background" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    // control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <Input placeholder="john@example.com" type="email" {...field} className="bg-background" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    // control={form.control}
-                    name="message"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Message</FormLabel>
-                        <FormControl>
-                          <Textarea 
-                            placeholder="Tell me about your project..." 
-                            className="min-h-[120px] bg-background resize-none" 
-                            {...field} 
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Button 
-                    type="submit" 
-                    className="w-full h-12 text-base font-medium"
-                    // disabled={mutation.isPending}
-                  >
-                    {/* {mutation.isPending ? "Sending..." : "Send Message"}
-                    {!mutation.isPending && <Send className="ml-2 w-4 h-4" />} */}
-                    "Send Message"
-                  </Button>
-                </form>
-              </Form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+  //           <div className="bg-background/50 p-6 rounded-xl border border-border/50">
+  //             {/* <Form {...form}> */}
+  //             <Form>
+  //               {/* <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6"> */}
+  //               <form className="space-y-6">
+  //                 <FormField
+  //                   // control={form.control}
+  //                   name="name"
+  //                   render={({ field }) => (
+  //                     <FormItem>
+  //                       <FormLabel>Name</FormLabel>
+  //                       <FormControl>
+  //                         <Input placeholder="John Doe" {...field} className="bg-background" />
+  //                       </FormControl>
+  //                       <FormMessage />
+  //                     </FormItem>
+  //                   )}
+  //                 />
+  //                 <FormField
+  //                   // control={form.control}
+  //                   name="email"
+  //                   render={({ field }) => (
+  //                     <FormItem>
+  //                       <FormLabel>Email</FormLabel>
+  //                       <FormControl>
+  //                         <Input placeholder="john@example.com" type="email" {...field} className="bg-background" />
+  //                       </FormControl>
+  //                       <FormMessage />
+  //                     </FormItem>
+  //                   )}
+  //                 />
+  //                 <FormField
+  //                   // control={form.control}
+  //                   name="message"
+  //                   render={({ field }) => (
+  //                     <FormItem>
+  //                       <FormLabel>Message</FormLabel>
+  //                       <FormControl>
+  //                         <Textarea 
+  //                           placeholder="Tell me about your project..." 
+  //                           className="min-h-[120px] bg-background resize-none" 
+  //                           {...field} 
+  //                         />
+  //                       </FormControl>
+  //                       <FormMessage />
+  //                     </FormItem>
+  //                   )}
+  //                 />
+  //                 <Button 
+  //                   type="submit" 
+  //                   className="w-full h-12 text-base font-medium"
+  //                   // disabled={mutation.isPending}
+  //                 >
+  //                   {/* {mutation.isPending ? "Sending..." : "Send Message"}
+  //                   {!mutation.isPending && <Send className="ml-2 w-4 h-4" />} */}
+  //                   "Send Message"
+  //                 </Button>
+  //               </form>
+  //             </Form>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </section>
+  // );
 }
 
 export default function Home() {

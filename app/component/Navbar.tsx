@@ -7,13 +7,19 @@ import { Menu, X, Code2 } from "lucide-react";
 import { Button } from "../component/components/ui/Button";
 import { cn } from "../utils";
 import { Link as ScrollLink } from "react-scroll";
+import { usePathname } from "next/navigation";
+
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [location] = useLocation();
+  // const [location] = useLocation();
+  const pathname = usePathname();
 
-  const isHome = location === "/";
+  
+
+
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {

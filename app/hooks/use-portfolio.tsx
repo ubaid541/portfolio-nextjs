@@ -156,7 +156,7 @@ const MOCK_PROJECTS: Project[] = [
     description: "Its the official website for tech services company.",
     techStack: ["Nextjs","tailwind css", "Material UI","Restful APIs"],
     // imageUrl: "https://placehold.co/600x400/1e293b/cbd5e1?text=Custom+CMS",
-    imageUrl: "/portfolio_images/apraj.png",
+    imageUrl: "/portfolio_images/arkan.png",
     link: "https://arkantech.com/",
     githubLink: null
   },

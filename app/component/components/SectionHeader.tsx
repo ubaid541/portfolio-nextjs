@@ -21,7 +21,7 @@ export default function SectionHeader({ title, subtitle, align = "left" }: Secti
           </span>
         </h2>
         <div className={`h-1 w-20 bg-primary/50 rounded-full mb-4 ${align === "center" ? "mx-auto" : ""}`}></div>
-        <p className="text-muted-foreground text-lg max-w-2xl mx-auto md:mx-0">
+        <p className={`text-muted-foreground text-lg max-w-2xl mx-auto md:mx-0 ${align === "center" ? "mx-auto" : ""}`}>
           {subtitle}
         </p>
       </motion.div>

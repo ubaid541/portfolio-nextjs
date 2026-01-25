@@ -10,13 +10,14 @@ import { Input } from "./components/ui/Input";
 import { Textarea } from "./components/ui/Textarea";
 import { Card, CardContent, CardHeader } from "./components/ui/Card";
 import { Badge } from "./components/ui/Badge";
-import { useSkills, useExperience, useProjects, useContactMutation } from "../hooks/use-portfolio";
+// import { useSkills, useExperience, useProjects, useContactMutation } from "../hooks/use-portfolio";
+import { useSkills, useExperience, useProjects } from "../hooks/use-portfolio";
 import { ArrowRight, Download, Send, Terminal, Server, Database, Globe, Calendar, MapPin, Briefcase, Mail } from "lucide-react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { insertMessageSchema } from "@shared/schema";
+// import { insertMessageSchema } from "@shared/schema";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 
@@ -468,11 +469,11 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <About />
+        {/* <About />
         <Skills />
         <Experience />
-        <Projects />
-        <Contact />
+        <Projects /> */}
+        {/* <Contact /> */}
       </main>
       <Footer />
     </div>
