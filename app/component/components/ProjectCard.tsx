@@ -1,3 +1,4 @@
+"use client";
 import { ExternalLink, Github } from "lucide-react";
 // import { Badge } from "@/components/ui/badge";
 import { Badge } from "./ui/Badge";
@@ -38,7 +39,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60 z-10" />
           {/* Using a placeholder if imageUrl is empty or invalid, assuming Unsplash URLs work */}
           <img 
-            src={project.imageUrl || `https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=60`}
+            src={project?.imageUrl || `https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=60`}
             alt={project.title}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />

@@ -1,6 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "wouter";
+// import { Link, useLocation } from "wouter";
+// import { Link } from "wouter";
+import Link from "next/link";
+
 import { Menu, X, Code2 } from "lucide-react";
 // import { Button } from "./components/ui/button.tsx";
 // import { Button } from "../components/ui/Button.tsx";
@@ -128,7 +131,7 @@ export default function Navbar() {
             {/* <Link href="/blog" onClick={() => setIsOpen(false)} className="text-lg font-medium text-muted-foreground hover:text-primary py-2 border-b border-border/50">
               Blog
             </Link> */}
-            <Button className="w-full mt-2" onClick={() => window.open("/resume.pdf", "_blank")}>
+            <Button className="w-full mt-2" onClick={() => window.open("/ubaid_ur_rehman_resume.pdf", "_blank")}>
               Download Resume
             </Button>
           </div>
