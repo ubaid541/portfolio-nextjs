@@ -28,7 +28,7 @@ export default function Navbar() {
     { name: "Skills", to: "skills" },
     { name: "Experience", to: "experience" },
     { name: "Projects", to: "projects" },
-    { name: "Contact", to: "contact" },
+    // { name: "Contact", to: "contact" },
   ];
 
   return (

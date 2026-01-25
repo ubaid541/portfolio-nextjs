@@ -69,13 +69,13 @@ function Hero() {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
+                {/* <Button 
                   size="lg" 
                   className="bg-primary hover:bg-primary/90 text-white px-8 h-14 rounded-full text-base"
                   onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
                 >
                   Let's Connect <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
+                </Button> */}
                 <Button 
                   variant="outline" 
                   size="lg" 
@@ -498,7 +498,7 @@ export default function Home() {
         <Skills />
         <Experience />
         <Projects />
-        <Contact />
+        {/* <Contact /> */}
       </main>
       <Footer />
     </div>
