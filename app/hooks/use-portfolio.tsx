@@ -71,12 +71,12 @@ const MOCK_SKILLS: Skill[] = [
   {
     id: 2,
     category: "Backend & APIs",
-    items: ["Node.js", "Express.js", "REST APIs", "PostgreSQL", "MongoDB"]
+    items: ["Node.js", "Express.js", "REST APIs", "MongoDB"]
   },
   {
     id: 3,
     category: "Tools & Platforms",
-    items: ["Git", "Postman", "PWA", "Capacitor", "Vite", "Drizzle ORM"]
+    items: ["Git", "Postman", "PWA",  "Vite"]
   }
 ];
 
@@ -87,7 +87,7 @@ const MOCK_EXPERIENCE: Experience[] = [
     role: "React.js Developer",
     period: "03/2023 – 01/2026",
     description: "Developed a multi-tenant SaaS CRM system from scratch. Built a custom CMS platform with secure API integrations. Integrated Facebook Graph APIs and Google APIs (Maps, Auth). Delivered an Employee Attendance Management System.",
-    location: "Islamabad, Pakistan"
+    location: "Dubai, Remote"
   },
   {
     id: 2,

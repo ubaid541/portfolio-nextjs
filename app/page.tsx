@@ -107,7 +107,7 @@ function Hero() {
                   <p><span className="text-purple-400">const</span> <span className="text-blue-400">developer</span> = <span className="text-yellow-400">{"{"}</span></p>
                   <p className="pl-4">name: <span className="text-green-400">"Ubaid Ur Rehman"</span>,</p>
                   <p className="pl-4">role: <span className="text-green-400">"Frontend Engineer"</span>,</p>
-                  <p className="pl-4">skills: <span className="text-yellow-400">["React", "TypeScript", "Node.js"]</span>,</p>
+                  <p className="pl-4">skills: <span className="text-yellow-400">["React", "Nextjs", "TypeScript", "Node.js"]</span>,</p>
                   <p className="pl-4">passion: <span className="text-green-400">"Building clean UI/UX"</span>,</p>
                   <p className="pl-4">status: <span className="text-green-400">"Ready to code"</span></p>
                   <p className="text-yellow-400">{"}"}</p>
