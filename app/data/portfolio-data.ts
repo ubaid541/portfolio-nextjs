@@ -132,9 +132,8 @@ export const PROJECTS: Project[] = [
     techStack: ["React.js", "Tailwind CSS", "MUI", "Node.js", "REST APIs"],
     imageUrl: "/portfolio_images/dodealcrm_main.png",
     screenshots: [
-      "/portfolio_images/dodealcrm_main.png",
-      "/portfolio_images/dodeal_cms.png",
-      "/portfolio_images/dodeal_web.png",
+      "/portfolio_images/crm/dodealcrm_main.png",
+      "/portfolio_images/crm/dodealcrm_2.png",
     ],
     link: null,
     githubLink: null,
@@ -176,18 +175,68 @@ export const PROJECTS: Project[] = [
       coreWebVitals: "Passed",
     },
   },
+  // {
+  //   id: 2,
+  //   title: "Custom CMS",
+  //   subtitle:
+  //     "Secure, API-driven Content Management System for centralized management of multiple client websites.",
+  //   description:
+  //     "Secure, API-driven Content Management System for centralized management of multiple client websites.",
+  //   longDescription:
+  //     "A powerful headless CMS platform built to manage content across multiple client-facing websites from a single admin interface. The system features fine-grained access control, multi-language support, and a flexible content schema designer that allows non-technical users to model their own content types without developer intervention.",
+  //   techStack: ["React.js", "Tailwind CSS", "Material UI", "RESTful APIs"],
+  //   imageUrl: "/portfolio_images/cms.png",
+  //   screenshots: ["/portfolio_images/cms.png"],
+  //   link: null,
+  //   githubLink: null,
+  //   details: {
+  //     client: "Internal Product",
+  //     duration: "4 Months",
+  //     role: "Frontend Engineer",
+  //   },
+  //   challenge: {
+  //     description:
+  //       "Managing content updates for multiple client websites through separate dashboards was inefficient and error-prone. The client needed a unified interface that could handle diverse content types across different domains.",
+  //     hurdles:
+  //       "The primary challenge was designing a schema system flexible enough to accommodate varied content structures while keeping the authoring experience intuitive.",
+  //   },
+  //   solution: {
+  //     description:
+  //       "We built a dynamic schema engine paired with a clean React-based admin UI that lets content editors create and manage structured content types visually, with API endpoints auto-generated for each schema.",
+  //     features: [
+  //       {
+  //         title: "Dynamic Schema Builder",
+  //         description: "Visual tool to create custom content models.",
+  //       },
+  //       {
+  //         title: "Multi-site Management",
+  //         description: "Manage all client sites from one dashboard.",
+  //       },
+  //     ],
+  //   },
+  //   keyFeatures: [
+  //     "Role-based access with granular editorial permissions.",
+  //     "API-first architecture for headless integrations.",
+  //     "Rich text editor with media library support.",
+  //     "Scheduled publishing and content versioning.",
+  //   ],
+  //   performanceMetrics: {
+  //     lighthouseScore: 95,
+  //     coreWebVitals: "Passed",
+  //   },
+  // },
   {
     id: 2,
     title: "Custom CMS",
     subtitle:
-      "Secure, API-driven Content Management System for centralized management of multiple client websites.",
+      "A custom built internal CMS designed to manage all tennats and clients of the Dodeal CRM platform from a single admin interface.",
     description:
-      "Secure, API-driven Content Management System for centralized management of multiple client websites.",
+      "A custom built internal CMS designed to manage all tennats and clients of the Dodeal CRM platform from a single admin interface.",
     longDescription:
-      "A powerful headless CMS platform built to manage content across multiple client-facing websites from a single admin interface. The system features fine-grained access control, multi-language support, and a flexible content schema designer that allows non-technical users to model their own content types without developer intervention.",
+      "A custom built internal CMS designed to manage all tennats and clients of the Dodeal CRM platform from a single admin interface. User can view and manage all clients who have purchased CRM and manage their subscription. User can take overview of all active,expired and pending client accounts across the platform.  ",
     techStack: ["React.js", "Tailwind CSS", "Material UI", "RESTful APIs"],
-    imageUrl: "/portfolio_images/cms.png",
-    screenshots: ["/portfolio_images/cms.png"],
+    imageUrl: "/portfolio_images/dodeal_cms.png",
+    screenshots: ["/portfolio_images/cms/dodeal_cms.png", "/portfolio_images/cms/dodeal_cms_2.png"],
     link: null,
     githubLink: null,
     details: {
@@ -197,29 +246,29 @@ export const PROJECTS: Project[] = [
     },
     challenge: {
       description:
-        "Managing content updates for multiple client websites through separate dashboards was inefficient and error-prone. The client needed a unified interface that could handle diverse content types across different domains.",
+        "Building a centralized admin interface that could handle multi-tenant data in isolation, each client's payment,subscription,users and other data should be isolated from other clients.",
       hurdles:
-        "The primary challenge was designing a schema system flexible enough to accommodate varied content structures while keeping the authoring experience intuitive.",
+        "Ensuring strict data isolation between tenants while providing a unified admin view was complex, each client's subscription state, payment history, and user roster had to remain completely siloed from others.",
     },
     solution: {
       description:
-        "We built a dynamic schema engine paired with a clean React-based admin UI that lets content editors create and manage structured content types visually, with API endpoints auto-generated for each schema.",
+        "Built a secure, role-protected admin dashboard with tenant-scoped data access, giving operators a  snapshot of every client account's status, subscription tier, and payment standing from a single interface.",
       features: [
         {
-          title: "Dynamic Schema Builder",
-          description: "Visual tool to create custom content models.",
+          title: "Tenant-Scoped Data Views",
+          description: "Isolated client data with strict per-tenant access control.",
         },
         {
-          title: "Multi-site Management",
-          description: "Manage all client sites from one dashboard.",
+          title: "Subscription & Account Management",
+          description: "Full control over active, expired, and pending client accounts.",
         },
       ],
     },
     keyFeatures: [
-      "Role-based access with granular editorial permissions.",
-      "API-first architecture for headless integrations.",
-      "Rich text editor with media library support.",
-      "Scheduled publishing and content versioning.",
+      "Overview of active, expired, and pending client accounts.",
+      // "Subscription management with upgrade, downgrade, and cancellation controls.",
+      "Per-tenant user roster and permission management.",
+      "Payment history and invoice tracking per client.",
     ],
     performanceMetrics: {
       lighthouseScore: 95,
