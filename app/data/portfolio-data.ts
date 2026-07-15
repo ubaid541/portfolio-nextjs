@@ -283,16 +283,19 @@ export const PROJECTS: Project[] = [
     description:
       "Its the official website for the crm through which user can buy the crm and go through complete onboarding process.",
     longDescription:
-      "The marketing and onboarding website for the Dodeal CRM product. This site serves as the primary conversion funnel — introducing the product features, showcasing pricing plans, and guiding new users through a streamlined registration and subscription flow that connects directly to the SaaS CRM backend.",
+      "The marketing and onboarding website for the Dodeal CRM product. This site serves as the primary conversion funnel ,introducing the product features, showcasing pricing plans, and guiding new users through a streamlined registration and subscription flow that connects directly to the SaaS CRM backend.",
     techStack: ["React.js", "Tailwind CSS", "Material UI", "RESTful APIs"],
-    imageUrl: "/portfolio_images/dodeal_web.png",
-    screenshots: ["/portfolio_images/dodeal_web.png"],
-    link: null,
+    imageUrl: "/portfolio_images/crm_landing_page/dodeal_web.png",
+    screenshots: [
+      "/portfolio_images/crm_landing_page/dodeal_web.png",
+      "/portfolio_images/crm_landing_page/dodeal_web_2.png",
+    ],
+    link: "https://dodealcrm.com/",
     githubLink: null,
     details: {
       client: "Dodeal",
       duration: "2 Months",
-      role: "Frontend Developer",
+      role: "Frontend Engineer",
     },
     challenge: {
       description:
@@ -375,24 +378,74 @@ export const PROJECTS: Project[] = [
       coreWebVitals: "Passed",
     },
   },
+  // {
+  //   id: 5,
+  //   title: "Apraj",
+  //   subtitle:
+  //     "A modern real estate platform to showcase properties to potential buyers.",
+  //   description:
+  //     "These website is for the real estate company to show the property to the clients and users to buy the property.",
+  //   longDescription:
+  //     "A real estate listing and showcase platform for Apraj, designed to help potential buyers discover and inquire about properties. The site features high-quality property galleries, detailed specification pages, location maps, and a direct inquiry system that routes leads to the sales team.",
+  //   techStack: ["Next.js", "Tailwind CSS", "Material UI", "RESTful APIs"],
+  //   imageUrl: "/portfolio_images/apraj.png",
+  //   screenshots: ["/portfolio_images/apraj.png"],
+  //   link: null,
+  //   githubLink: null,
+  //   details: {
+  //     client: "Apraj Real Estate",
+  //     duration: "3 Months",
+  //     role: "Frontend Engineer",
+  //   },
+  //   challenge: {
+  //     description:
+  //       "The client needed an online presence that could effectively showcase high-value properties with rich media while generating qualified leads.",
+  //     hurdles:
+  //       "Optimizing large property image galleries for fast load times without compromising visual quality was a significant technical challenge.",
+  //   },
+  //   solution: {
+  //     description:
+  //       "Leveraged Next.js Image optimization to deliver crisp property photos at optimal file sizes, paired with an intuitive search and filter system.",
+  //     features: [
+  //       {
+  //         title: "Optimized Property Galleries",
+  //         description: "Next.js Image-powered fast-loading photo carousels.",
+  //       },
+  //       {
+  //         title: "Lead Capture System",
+  //         description: "Integrated inquiry forms with CRM routing.",
+  //       },
+  //     ],
+  //   },
+  //   keyFeatures: [
+  //     "Advanced property search with filter by price, area, and type.",
+  //     "Interactive location maps with nearby amenities.",
+  //     "Mobile-first responsive property listing pages.",
+  //     "Direct inquiry forms.",
+  //   ],
+  //   performanceMetrics: {
+  //     lighthouseScore: 96,
+  //     coreWebVitals: "Passed",
+  //   },
+  // },
   {
     id: 5,
-    title: "Apraj",
+    title: "Apoelezz",
     subtitle:
       "A modern real estate platform to showcase properties to potential buyers.",
     description:
       "These website is for the real estate company to show the property to the clients and users to buy the property.",
     longDescription:
-      "A real estate listing and showcase platform for Apraj, designed to help potential buyers discover and inquire about properties. The site features high-quality property galleries, detailed specification pages, location maps, and a direct inquiry system that routes leads to the sales team.",
+      "A real estate listing and showcase platform for Apoelezz, designed to help potential buyers discover and inquire about properties. The site features high-quality property galleries, detailed specification pages, location maps, and a direct inquiry system that routes leads to the sales team.",
     techStack: ["Next.js", "Tailwind CSS", "Material UI", "RESTful APIs"],
-    imageUrl: "/portfolio_images/apraj.png",
-    screenshots: ["/portfolio_images/apraj.png"],
+    imageUrl: "/portfolio_images/apoelezz/apoelezz.png",
+    screenshots: ["/portfolio_images/apoelezz/apoelezz.png", "/portfolio_images/apoelezz/apoelezz_2.jpg"],
     link: null,
     githubLink: null,
     details: {
-      client: "Apraj Real Estate",
+      client: "Apoelezz Real Estate",
       duration: "3 Months",
-      role: "Full-Stack Developer",
+      role: "Frontend Engineer",
     },
     challenge: {
       description:
@@ -402,7 +455,7 @@ export const PROJECTS: Project[] = [
     },
     solution: {
       description:
-        "Leveraged Next.js Image optimization and a CDN-backed media pipeline to deliver crisp property photos at optimal file sizes, paired with an intuitive search and filter system.",
+        "Leveraged Next.js Image optimization to deliver crisp property photos at optimal file sizes, paired with an intuitive search and filter system.",
       features: [
         {
           title: "Optimized Property Galleries",
@@ -418,7 +471,7 @@ export const PROJECTS: Project[] = [
       "Advanced property search with filter by price, area, and type.",
       "Interactive location maps with nearby amenities.",
       "Mobile-first responsive property listing pages.",
-      "Direct inquiry forms with automated email notifications.",
+      "Direct inquiry forms.",
     ],
     performanceMetrics: {
       lighthouseScore: 96,
@@ -441,7 +494,7 @@ export const PROJECTS: Project[] = [
     details: {
       client: "Arkan Tech",
       duration: "2 Months",
-      role: "Frontend Developer",
+      role: "Frontend Engineer",
     },
     challenge: {
       description:
