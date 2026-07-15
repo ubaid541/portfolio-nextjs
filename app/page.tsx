@@ -32,7 +32,7 @@ import { Card, CardContent, CardHeader } from "./component/components/ui/Card";
 import { Badge } from "./component/components/ui/Badge";
 // import { useSkills, useExperience, useProjects, useContactMutation } from "./hooks/use-portfolio";
 import { useSkills, useExperience, useProjects } from "./hooks/use-portfolio";
-import { ArrowRight, Download, Send, Terminal, Server, Database, Globe, Calendar, MapPin, Briefcase, Mail } from "lucide-react";
+import { ArrowRight, Download, Send, Terminal, Server, Database, Globe, Calendar, MapPin, Briefcase, Mail, Users } from "lucide-react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -49,7 +49,7 @@ function Hero() {
       {/* Background Elements */}
       <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] -z-10 opacity-50"></div>
       <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-500/20 rounded-full blur-[100px] -z-10 opacity-30"></div>
-      
+
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className="flex-1 space-y-8">
@@ -65,9 +65,9 @@ function Hero() {
                 Building <span className="text-gradient-primary">Scalable</span> Digital Experiences
               </h1>
               <p className="text-xl text-muted-foreground leading-relaxed max-w-xl mb-8">
-                I'm Ubaid Ur Rehman, a Senior React Developer passionate about crafting performant, accessible, and beautiful web applications.
+                I'm Ubaid Ur Rehman, a Frontend Engineer passionate about crafting performant, accessible, and beautiful web applications.
               </p>
-              
+
               <div className="flex flex-col sm:flex-row gap-4">
                 {/* <Button 
                   size="lg" 
@@ -76,9 +76,9 @@ function Hero() {
                 >
                   Let's Connect <ArrowRight className="ml-2 w-5 h-5" />
                 </Button> */}
-                <Button 
-                  variant="outline" 
-                  size="lg" 
+                <Button
+                  variant="outline"
+                  size="lg"
                   className="border-white/20 hover:bg-white/5 h-14 rounded-full text-base"
                   onClick={() => window.open("/ubaid_ur_rehman_resume.pdf", "_blank")}
                 >
@@ -87,8 +87,8 @@ function Hero() {
               </div>
             </motion.div>
           </div>
-          
-          <motion.div 
+
+          <motion.div
             className="flex-1 w-full max-w-md md:max-w-full relative"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -130,11 +130,11 @@ function About() {
   return (
     <section id="about" className="py-24 bg-secondary/20">
       <div className="container mx-auto px-4 md:px-6">
-        <SectionHeader 
-          title="About Me" 
-          subtitle="Passionate developer with over 3 years of experience in the JavaScript ecosystem." 
+        <SectionHeader
+          title="About Me"
+          subtitle="Passionate developer with over 3 years of experience in the JavaScript ecosystem."
         />
-        
+
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -149,15 +149,21 @@ function About() {
               Currently, I specialize in the MERN stack (MongoDB, Express, React, Node.js), with a strong focus on Frontend architecture. I love solving difficult problems and optimizing user experiences to be as intuitive and accessible as possible.
             </p>
             <p className="text-muted-foreground leading-relaxed mt-4">
-              When I'm not coding, you can find me exploring new technologies, contributing to open-source, or sharing knowledge with the developer community.
+              {/* When I'm not coding, you can find me exploring new technologies, contributing to open-source, or sharing knowledge with the developer community. */}
+              When I'm not coding, you can find me exploring new technologies or sharing knowledge with the developer community.
             </p>
           </motion.div>
-          
+
           <div className="grid grid-cols-2 gap-4">
             {[
               { label: "Experience", value: "3+ Years", icon: <Calendar className="w-5 h-5 text-primary" /> },
-              { label: "Projects", value: "20+ Built", icon: <Terminal className="w-5 h-5 text-primary" /> },
-              { label: "Clients", value: "Global", icon: <Globe className="w-5 h-5 text-primary" /> },
+              { label: "Projects", value: "10+ Built", icon: <Terminal className="w-5 h-5 text-primary" /> },
+              // { label: "Clients", value: "Global", icon: <Globe className="w-5 h-5 text-primary" /> },
+              {
+                label: "Users", value: "500+",
+                // icon: <Globe className="w-5 h-5 text-primary" /> 
+                icon: <Users className="w-5 h-5 text-primary" />
+              },
               { label: "Stack", value: "MERN", icon: <Database className="w-5 h-5 text-primary" /> },
             ].map((stat, i) => (
               <motion.div
@@ -189,18 +195,18 @@ function About() {
 
 // === SKILLS SECTION ===
 function Skills() {
-  const {  skills, isLoading } = useSkills();
-  console.log("skills :",skills)
+  const { skills, isLoading } = useSkills();
+  console.log("skills :", skills)
 
   return (
     <section id="skills" className="py-24">
       <div className="container mx-auto px-4 md:px-6">
-        <SectionHeader 
-          title="Technical Skills" 
-          subtitle="A comprehensive toolkit for building modern digital products." 
+        <SectionHeader
+          title="Technical Skills"
+          subtitle="A comprehensive toolkit for building modern digital products."
           align="center"
         />
-        
+
         {isLoading ? (
           <div className="grid md:grid-cols-3 gap-8">
             {[1, 2, 3].map((i) => (
@@ -209,7 +215,7 @@ function Skills() {
           </div>
         ) : (
           <div className="grid md:grid-cols-3 gap-8">
-            {skills?.map((skillGroup , idx) => (
+            {skills?.map((skillGroup, idx) => (
               <motion.div
                 key={skillGroup.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -230,10 +236,10 @@ function Skills() {
                   </CardHeader>
                   <CardContent>
                     <div className="flex flex-wrap gap-2">
-                      {skillGroup.items?.map((item ) => (
-                        <Badge 
-                          key={item} 
-                          variant="secondary" 
+                      {skillGroup.items?.map((item) => (
+                        <Badge
+                          key={item}
+                          variant="secondary"
                           className="px-3 py-1 text-sm bg-secondary hover:bg-secondary/80"
                         >
                           {item}
@@ -253,21 +259,21 @@ function Skills() {
 
 // === EXPERIENCE SECTION ===
 function Experience() {
-  const {  experiences, isLoading } = useExperience();
-  console.log("experience: ",experiences)
+  const { experiences, isLoading } = useExperience();
+  console.log("experience: ", experiences)
 
   return (
     <section id="experience" className="py-24 bg-secondary/20">
       <div className="container mx-auto px-4 md:px-6">
-        <SectionHeader 
-          title="Work Experience" 
-          subtitle="My professional journey in the tech industry." 
+        <SectionHeader
+          title="Work Experience"
+          subtitle="My professional journey in the tech industry."
         />
-        
+
         <div className="max-w-4xl mx-auto space-y-8 relative">
           {/* Timeline line */}
           <div className="absolute left-[28px] top-4 bottom-4 w-px bg-border md:left-1/2 md:-ml-[0.5px]"></div>
-          
+
           {isLoading ? (
             <div className="text-center text-muted-foreground">Loading experience...</div>
           ) : (
@@ -282,7 +288,7 @@ function Experience() {
               >
                 {/* Timeline Dot */}
                 <div className="absolute left-[20px] top-6 w-4 h-4 rounded-full bg-primary border-4 border-background md:left-1/2 md:-ml-[8px] z-10"></div>
-                
+
                 <div className="flex-1 ml-16 md:ml-0">
                   <Card className="bg-card border-border/50 p-6 hover:border-primary/30 transition-colors">
                     <div className="flex flex-col gap-1 mb-4">
@@ -316,17 +322,17 @@ function Experience() {
 
 // === PROJECTS SECTION ===
 function Projects() {
-  const {  projects, isLoading } = useProjects();
+  const { projects, isLoading } = useProjects();
 
   return (
     <section id="projects" className="py-24">
       <div className="container mx-auto px-4 md:px-6">
-        <SectionHeader 
-          title="Featured Projects" 
+        <SectionHeader
+          title="Featured Projects"
           subtitle="A showcase of my recent development work."
           align="center"
         />
-        
+
         {isLoading ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[1, 2, 3].map((i) => (
@@ -349,7 +355,7 @@ function Projects() {
 function Contact() {
   const { toast } = useToast();
   // const mutation = useContactMutation();
-  
+
   // const form = useForm<z.infer<typeof insertMessageSchema>>({
   //   resolver: zodResolver(insertMessageSchema),
   //   defaultValues: {
@@ -388,7 +394,7 @@ function Contact() {
   //           subtitle="Have a project in mind or want to say hi? I'd love to hear from you." 
   //           align="center"
   //         />
-          
+
   //         <div className="grid md:grid-cols-2 gap-12 bg-card border border-border/50 rounded-2xl p-8 md:p-12 shadow-2xl">
   //           <div className="space-y-8">
   //             <div>
@@ -397,7 +403,7 @@ function Contact() {
   //                 Feel free to reach out via email or connect with me on social media. I'm always open to discussing new projects, creative ideas, or opportunities.
   //               </p>
   //             </div>
-              
+
   //             <div className="space-y-4">
   //               <div className="flex items-center gap-4">
   //                 <div className="p-3 bg-primary/10 rounded-full text-primary">
@@ -410,7 +416,7 @@ function Contact() {
   //                   </a>
   //                 </div>
   //               </div>
-                
+
   //               <div className="flex items-center gap-4">
   //                 <div className="p-3 bg-primary/10 rounded-full text-primary">
   //                   <MapPin className="w-5 h-5" />
@@ -422,7 +428,7 @@ function Contact() {
   //               </div>
   //             </div>
   //           </div>
-            
+
   //           <div className="bg-background/50 p-6 rounded-xl border border-border/50">
   //             {/* <Form {...form}> */}
   //             <Form>
