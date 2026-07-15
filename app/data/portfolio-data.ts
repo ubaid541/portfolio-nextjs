@@ -130,7 +130,7 @@ export const PROJECTS: Project[] = [
     longDescription:
       "This project is a comprehensive, enterprise-grade CRM platform designed to serve multiple clients from a single deployment. The system handles everything from lead capture and sales pipeline management to advanced subscription billing and real-time analytics dashboards. Built to support sales teams working across different verticals and geographies, the platform provides each tenant with an isolated, branded experience while sharing a common infrastructure for cost efficiency.",
     techStack: ["React.js", "Tailwind CSS", "MUI", "Node.js", "REST APIs"],
-    imageUrl: "/portfolio_images/dodealcrm_main.png",
+    imageUrl: "/portfolio_images/crm/dodealcrm_main.png",
     screenshots: [
       "/portfolio_images/crm/dodealcrm_main.png",
       "/portfolio_images/crm/dodealcrm_2.png",
@@ -235,7 +235,7 @@ export const PROJECTS: Project[] = [
     longDescription:
       "A custom built internal CMS designed to manage all tennats and clients of the Dodeal CRM platform from a single admin interface. User can view and manage all clients who have purchased CRM and manage their subscription. User can take overview of all active,expired and pending client accounts across the platform.  ",
     techStack: ["React.js", "Tailwind CSS", "Material UI", "RESTful APIs"],
-    imageUrl: "/portfolio_images/dodeal_cms.png",
+    imageUrl: "/portfolio_images/cms/dodeal_cms.png",
     screenshots: ["/portfolio_images/cms/dodeal_cms.png", "/portfolio_images/cms/dodeal_cms_2.png"],
     link: null,
     githubLink: null,
