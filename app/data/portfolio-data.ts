@@ -141,7 +141,7 @@ export const PROJECTS: Project[] = [
     details: {
       client: "Nexus Systems Inc.",
       duration: "6 Months",
-      role: "Lead Full-Stack Dev",
+      role: "Frontend Engineer",
     },
     challenge: {
       description:
@@ -158,16 +158,16 @@ export const PROJECTS: Project[] = [
           description:
             "Isolated data environments for enterprise-grade security.",
         },
-        {
-          title: "Automated Pipelines",
-          description:
-            "Draggable kanban boards for intuitive lead management.",
-        },
+        // {
+        //   title: "Automated Pipelines",
+        //   description:
+        //     "Draggable kanban boards for intuitive lead management.",
+        // },
       ],
     },
     keyFeatures: [
       "Real-time collaboration and notification system.",
-      "Deep integration with Stripe for automated subscription billing.",
+      // "Deep integration with Stripe for automated subscription billing.",
       "Customizable reporting dashboard with Export to PDF/CSV.",
       "Advanced RBAC (Role-Based Access Control) for granular permissions.",
     ],
@@ -193,7 +193,7 @@ export const PROJECTS: Project[] = [
     details: {
       client: "Internal Product",
       duration: "4 Months",
-      role: "Frontend Lead",
+      role: "Frontend Engineer",
     },
     challenge: {
       description:
