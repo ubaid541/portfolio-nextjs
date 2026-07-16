@@ -74,7 +74,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               <Github className="w-4 h-4" /> Code
             </Button>
           )}
-          {project.link && project.link !== "" && (
+          {project.link && project.link !== "" ? (
             <Button
               size="sm"
               className="gap-2 w-full bg-white text-black hover:bg-gray-200"
@@ -82,7 +82,20 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             >
               <ExternalLink className="w-4 h-4" /> Live Demo
             </Button>
-          )}
+          ) : null
+            // (
+            //   <Button
+            //     size="sm"
+            //     disabled
+            //     variant="outline"
+            //     className="gap-2 w-full border-border/50 text-muted-foreground bg-secondary/50 cursor-help"
+            //     title="Proprietary Product: Due to company confidentiality, a live demo is not available. Please refer to the provided screenshots and details."
+            //   >
+            //     <ExternalLink className="w-4 h-4 opacity-50 block md:hidden lg:block lg:w-4" style={{ height: "1.1rem" }} /> 
+            //     <span className="truncate">Demo Unavailable</span>
+            //   </Button>
+            // )
+          }
           {/* Always show "View Details" link */}
           <Link href={`/projects/${project.id}`} className="w-full">
             <Button

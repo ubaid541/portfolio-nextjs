@@ -405,13 +405,18 @@ export default function ProjectDetailsClient({ project, otherProjects }: Props) 
                   transition={{ duration: 0.5, delay: 0.2 }}
                   className="space-y-3"
                 >
-                  {project.link && project.link !== "" && (
+                  {project.link && project.link !== "" ? (
                     <Button
                       className="w-full h-12 bg-primary hover:bg-primary/90 text-white rounded-lg gap-2"
                       onClick={() => window.open(project.link!, "_blank")}
                     >
                       <ExternalLink className="w-4 h-4" /> Live Demo
                     </Button>
+                  ) : (
+                    <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20 text-orange-200 text-sm leading-relaxed">
+                      <strong className="text-orange-400 block mb-1">Proprietary Product</strong>
+                      Due to company confidentiality, a live demo is not available. Please refer to the provided screenshots and details.
+                    </div>
                   )}
                   {project.githubLink && (
                     <Button
