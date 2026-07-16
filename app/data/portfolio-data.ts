@@ -328,56 +328,56 @@ export const PROJECTS: Project[] = [
       coreWebVitals: "Passed",
     },
   },
-  {
-    id: 4,
-    title: "Dodeal CMS",
-    subtitle:
-      "A complete CMS to manage clients, users, payments and onboarding options.",
-    description:
-      "Its a complete cms to manage the clients, users, payments and other onboarding options.",
-    longDescription:
-      "The internal administration platform for the Dodeal ecosystem. This CMS gives the Dodeal operations team full control over client accounts, subscription statuses, payment records, and onboarding configurations. Built with an emphasis on data clarity and workflow efficiency, it enables the support team to resolve client issues quickly.",
-    techStack: ["React.js", "Tailwind CSS", "Material UI", "RESTful APIs"],
-    imageUrl: "/portfolio_images/dodeal_cms.png",
-    screenshots: ["/portfolio_images/dodeal_cms.png"],
-    link: null,
-    githubLink: null,
-    details: {
-      client: "Dodeal (Internal)",
-      duration: "3 Months",
-      role: "Frontend Developer",
-    },
-    challenge: {
-      description:
-        "The operations team was managing client data through spreadsheets and fragmented tools, leading to delays and data inconsistencies during client onboarding.",
-      hurdles:
-        "Consolidating payment records, user accounts, and onboarding workflows into a single coherent view required careful UX design to avoid information overload.",
-    },
-    solution: {
-      description:
-        "Designed a dashboard-first admin interface with context-aware data tables, inline editing capabilities, and a guided onboarding wizard that walks operators through each client setup step.",
-      features: [
-        {
-          title: "Unified Client Dashboard",
-          description: "All client data accessible from a single view.",
-        },
-        {
-          title: "Guided Onboarding Wizard",
-          description: "Step-by-step client configuration tool.",
-        },
-      ],
-    },
-    keyFeatures: [
-      "Full CRUD operations for clients, users, and subscriptions.",
-      "Payment history and invoice management.",
-      "Searchable and filterable data tables with export.",
-      "Audit logs for all administrative actions.",
-    ],
-    performanceMetrics: {
-      lighthouseScore: 93,
-      coreWebVitals: "Passed",
-    },
-  },
+  // {
+  //   id: 4,
+  //   title: "Dodeal CMS",
+  //   subtitle:
+  //     "A complete CMS to manage clients, users, payments and onboarding options.",
+  //   description:
+  //     "Its a complete cms to manage the clients, users, payments and other onboarding options.",
+  //   longDescription:
+  //     "The internal administration platform for the Dodeal ecosystem. This CMS gives the Dodeal operations team full control over client accounts, subscription statuses, payment records, and onboarding configurations. Built with an emphasis on data clarity and workflow efficiency, it enables the support team to resolve client issues quickly.",
+  //   techStack: ["React.js", "Tailwind CSS", "Material UI", "RESTful APIs"],
+  //   imageUrl: "/portfolio_images/dodeal_cms.png",
+  //   screenshots: ["/portfolio_images/dodeal_cms.png"],
+  //   link: null,
+  //   githubLink: null,
+  //   details: {
+  //     client: "Dodeal (Internal)",
+  //     duration: "3 Months",
+  //     role: "Frontend Developer",
+  //   },
+  //   challenge: {
+  //     description:
+  //       "The operations team was managing client data through spreadsheets and fragmented tools, leading to delays and data inconsistencies during client onboarding.",
+  //     hurdles:
+  //       "Consolidating payment records, user accounts, and onboarding workflows into a single coherent view required careful UX design to avoid information overload.",
+  //   },
+  //   solution: {
+  //     description:
+  //       "Designed a dashboard-first admin interface with context-aware data tables, inline editing capabilities, and a guided onboarding wizard that walks operators through each client setup step.",
+  //     features: [
+  //       {
+  //         title: "Unified Client Dashboard",
+  //         description: "All client data accessible from a single view.",
+  //       },
+  //       {
+  //         title: "Guided Onboarding Wizard",
+  //         description: "Step-by-step client configuration tool.",
+  //       },
+  //     ],
+  //   },
+  //   keyFeatures: [
+  //     "Full CRUD operations for clients, users, and subscriptions.",
+  //     "Payment history and invoice management.",
+  //     "Searchable and filterable data tables with export.",
+  //     "Audit logs for all administrative actions.",
+  //   ],
+  //   performanceMetrics: {
+  //     lighthouseScore: 93,
+  //     coreWebVitals: "Passed",
+  //   },
+  // },
   // {
   //   id: 5,
   //   title: "Apraj",
