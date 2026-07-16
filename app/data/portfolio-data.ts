@@ -527,6 +527,60 @@ export const PROJECTS: Project[] = [
       coreWebVitals: "Passed",
     },
   },
+  {
+    id: 7,
+    title: "Manager Dashboard",
+    subtitle:
+      "A comprehensive dashboard to track managers and agents performances, calls, meetings, and targets.",
+    description:
+      "A manager dashboard where users can login and check calls, meetings targets, agent modes, list of agents, and different charts to track weekly and monthly targets.",
+    longDescription:
+      "A complete dashboard application designed for tracking team performance metrics. It allows managers to login and monitor calls and meetings targets, check the real-time modes and lists of agents, and visualize performance through intuitive weekly and monthly charts.",
+    techStack: ["React.js", "Tailwind CSS", "Material UI", "REST APIs", "Recharts"],
+    imageUrl: "/portfolio_images/manger_dashboard/manger_dashboard.jpg",
+    screenshots: [
+      "/portfolio_images/manger_dashboard/manger_dashboard.jpg",
+      "/portfolio_images/manger_dashboard/manager_dashboard_2.jpg",
+
+    ],
+    link: null,
+    githubLink: null,
+    details: {
+      client: "Internal Tool",
+      duration: "2 Months",
+      role: "Frontend Engineer",
+    },
+    challenge: {
+      description:
+        "Managers lacked a centralized way to track agent performance, calls, and meetings, having to aggregate data manually from various tools.",
+      hurdles:
+        "Aggregating real-time data into a cohesive, performant dashboard while maintaining intuitive data visualization for weekly and monthly tracking.",
+    },
+    solution: {
+      description:
+        "Developed a customized React dashboard that visualizes targets, agent statuses, and overall performance metrics. Integrated dynamic charts to track targets against actual performance over time.",
+      features: [
+        {
+          title: "Performance Charts",
+          description: "Interactive weekly and monthly target tracking charts.",
+        },
+        {
+          title: "Agent Monitoring",
+          description: "Tracking of agent modes and statuses.",
+        },
+      ],
+    },
+    keyFeatures: [
+      "Role-based login and authentication.",
+      "Real-time calls and meetings target tracking.",
+      "Weekly and monthly performance visualization charts.",
+      "Agent mode tracking and list management.",
+    ],
+    performanceMetrics: {
+      lighthouseScore: 96,
+      coreWebVitals: "Passed",
+    },
+  },
 ];
 
 /* ─── POSTS ──────────────────────────────────────────────── */
