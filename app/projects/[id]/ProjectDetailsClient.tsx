@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   ChevronRight,
   ExternalLink,
@@ -107,7 +107,13 @@ function DetailNavbar() {
 /* ──────────────────────────────────────────────────────────────
    IMAGE CAROUSEL
 ────────────────────────────────────────────────────────────── */
-function ImageCarousel({ screenshots }: { screenshots: string[] }) {
+function ImageCarousel({
+  screenshots,
+  onImageClick,
+}: {
+  screenshots: string[];
+  onImageClick: (index: number) => void;
+}) {
   const [current, setCurrent] = useState(0);
 
   const prev = () =>
@@ -119,7 +125,7 @@ function ImageCarousel({ screenshots }: { screenshots: string[] }) {
 
   return (
     <div className="relative w-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-secondary/30 group">
-      {/* Image */}
+      {/* Clickable image — opens lightbox */}
       <motion.img
         key={current}
         src={screenshots[current]}
@@ -127,9 +133,15 @@ function ImageCarousel({ screenshots }: { screenshots: string[] }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4 }}
-        className="w-full object-cover"
+        className="w-full object-cover cursor-zoom-in"
         style={{ maxHeight: "420px", objectFit: "cover" }}
+        onClick={() => onImageClick(current)}
       />
+
+      {/* Zoom hint badge */}
+      <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
+        Click to expand
+      </div>
 
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent pointer-events-none" />
@@ -138,13 +150,13 @@ function ImageCarousel({ screenshots }: { screenshots: string[] }) {
       {screenshots.length > 1 && (
         <>
           <button
-            onClick={prev}
+            onClick={(e) => { e.stopPropagation(); prev(); }}
             className="absolute left-4 top-1/2 -translate-y-1/2 bg-background/70 backdrop-blur-sm border border-white/10 rounded-full p-2 text-foreground hover:text-primary hover:border-primary/50 transition-all opacity-0 group-hover:opacity-100"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <button
-            onClick={next}
+            onClick={(e) => { e.stopPropagation(); next(); }}
             className="absolute right-4 top-1/2 -translate-y-1/2 bg-background/70 backdrop-blur-sm border border-white/10 rounded-full p-2 text-foreground hover:text-primary hover:border-primary/50 transition-all opacity-0 group-hover:opacity-100"
           >
             <ChevronRightIcon className="w-5 h-5" />
@@ -233,6 +245,26 @@ interface Props {
 }
 
 export default function ProjectDetailsClient({ project, otherProjects }: Props) {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const lightboxPrev = () =>
+    setLightboxIndex((i) =>
+      i === null ? null : (i - 1 + project.screenshots.length) % project.screenshots.length
+    );
+  const lightboxNext = () =>
+    setLightboxIndex((i) =>
+      i === null ? null : (i + 1) % project.screenshots.length
+    );
+
+  // Close lightbox on Escape key
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightboxIndex(null);
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <DetailNavbar />
@@ -279,7 +311,10 @@ export default function ProjectDetailsClient({ project, otherProjects }: Props) 
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <ImageCarousel screenshots={project.screenshots} />
+              <ImageCarousel
+                screenshots={project.screenshots}
+                onImageClick={(idx) => setLightboxIndex(idx)}
+              />
             </motion.div>
           </div>
         </section>
@@ -578,6 +613,75 @@ export default function ProjectDetailsClient({ project, otherProjects }: Props) 
       </main>
 
       <DetailFooter />
+
+      {/* ── LIGHTBOX OVERLAY ─────────────────────────────────────── */}
+      <AnimatePresence>
+        {lightboxIndex !== null && (
+          <motion.div
+            key="lightbox-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[200] bg-black/85 backdrop-blur-md cursor-zoom-out"
+            onClick={() => setLightboxIndex(null)}
+          >
+            {/* Centered image — stops propagation so only true backdrop clicks close */}
+            <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-8 pointer-events-none">
+              <motion.img
+                key={lightboxIndex}
+                src={project.screenshots[lightboxIndex]}
+                alt={`Screenshot ${lightboxIndex + 1}`}
+                initial={{ opacity: 0, scale: 0.92 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.92 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="max-w-full max-h-[88vh] w-auto h-auto object-contain rounded-xl shadow-2xl ring-1 ring-white/10 pointer-events-auto cursor-default"
+                onClick={(e) => e.stopPropagation()}
+                style={{ imageRendering: "auto" }}
+              />
+            </div>
+
+            {/* Close button */}
+            <button
+              onClick={(e) => { e.stopPropagation(); setLightboxIndex(null); }}
+              className="absolute top-4 right-4 md:top-6 md:right-6 bg-black/60 hover:bg-black/80 border border-white/20 rounded-full p-2.5 text-white transition-all hover:scale-110 z-10"
+              aria-label="Close lightbox"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Image counter pill */}
+            {project.screenshots.length > 1 && (
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full z-10">
+                {lightboxIndex + 1} / {project.screenshots.length}
+              </div>
+            )}
+
+            {/* Prev arrow */}
+            {project.screenshots.length > 1 && (
+              <button
+                onClick={(e) => { e.stopPropagation(); lightboxPrev(); }}
+                className="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 border border-white/20 rounded-full p-3 text-white transition-all hover:scale-110 z-10"
+                aria-label="Previous image"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+            )}
+
+            {/* Next arrow */}
+            {project.screenshots.length > 1 && (
+              <button
+                onClick={(e) => { e.stopPropagation(); lightboxNext(); }}
+                className="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 border border-white/20 rounded-full p-3 text-white transition-all hover:scale-110 z-10"
+                aria-label="Next image"
+              >
+                <ChevronRightIcon className="w-5 h-5" />
+              </button>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

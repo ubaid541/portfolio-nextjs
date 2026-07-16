@@ -539,7 +539,7 @@ export const PROJECTS: Project[] = [
     techStack: ["React.js", "Tailwind CSS", "Material UI", "REST APIs", "Recharts"],
     imageUrl: "/portfolio_images/manger_dashboard/manger_dashboard.jpg",
     screenshots: [
-      "/portfolio_images/manger_dashboard/manger_dashboard.jpg",
+      "/portfolio_images/manger_dashboard/manager_dashboard.jpg",
       "/portfolio_images/manger_dashboard/manager_dashboard_2.jpg",
 
     ],
