@@ -290,7 +290,8 @@ export const PROJECTS: Project[] = [
       "/portfolio_images/crm_landing_page/dodeal_web.png",
       "/portfolio_images/crm_landing_page/dodeal_web_2.png",
     ],
-    link: "https://dodealcrm.com/",
+    // link: "https://dodealcrm.com/",
+    link: null,
     githubLink: null,
     details: {
       client: "Dodeal",
@@ -537,7 +538,7 @@ export const PROJECTS: Project[] = [
     longDescription:
       "A complete dashboard application designed for tracking team performance metrics. It allows managers to login and monitor calls and meetings targets, check the real-time modes and lists of agents, and visualize performance through intuitive weekly and monthly charts.",
     techStack: ["React.js", "Tailwind CSS", "Material UI", "REST APIs", "Recharts"],
-    imageUrl: "/portfolio_images/manger_dashboard/manger_dashboard.jpg",
+    imageUrl: "/portfolio_images/manger_dashboard/manager_dashboard.jpg",
     screenshots: [
       "/portfolio_images/manger_dashboard/manager_dashboard.jpg",
       "/portfolio_images/manger_dashboard/manager_dashboard_2.jpg",
