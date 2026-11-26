@@ -3,16 +3,16 @@
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { HERO_PORTRAIT_SRC, nav, person } from "../lib/portfolio-content";
+import { HERO_AVATAR_SRC, nav, person } from "../lib/portfolio-content";
 
 type Props = {
   dark: boolean;
   onToggle: () => void;
-  avatarSrc: string | null;
+  avatarSrc?: string | null;
   isSubpage?: boolean;
 };
 
-export function Header({ dark, onToggle, avatarSrc, isSubpage = false }: Props) {
+export function Header({ dark, onToggle, avatarSrc = null, isSubpage = false }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const brandHref = isSubpage ? "/" : "#top";
@@ -33,14 +33,13 @@ export function Header({ dark, onToggle, avatarSrc, isSubpage = false }: Props) 
         >
           <span className="relative size-8 shrink-0 overflow-hidden rounded-full bg-disc">
             <img
-              src={avatarSrc ?? HERO_PORTRAIT_SRC}
+              src={avatarSrc ?? HERO_AVATAR_SRC}
               alt=""
+              width={32}
+              height={32}
+              decoding="async"
               referrerPolicy="no-referrer"
-              className={
-                avatarSrc
-                  ? "absolute top-[2%] left-[-14%] w-[128%] max-w-none"
-                  : "h-full w-full object-cover object-top"
-              }
+              className="absolute top-[2%] left-[-14%] w-[128%] max-w-none"
             />
           </span>
           <span>{person.handle}</span>

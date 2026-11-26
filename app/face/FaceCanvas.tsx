@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type RefObject } from "react";
+import { useEffect, useRef, type RefObject } from "react";
 import {
   faces,
   // releaseFaces,
@@ -17,6 +17,7 @@ type Props = {
   discColor: string;
   onMood: (m: Mood) => void;
   onAvatarReady?: (dataUrl: string) => void;
+  onReady?: () => void;
 };
 
 /** Neutral hold time after a release before returning to cursor gaze tracking. */
@@ -33,34 +34,27 @@ function load(src: string) {
   });
 }
 
-/*
-// Which expression a grab triggers, based on where the pointer lands in UV.
-function grabFace(u: number, v: number): FaceKey {
-  const side = Math.abs(u - 0.5);
-  if (v < rig.hairLine || (side > rig.sides && v < 0.58)) return "g_ouch";
-  if (side > 0.065 && v > 0.42 && v < 0.58) return "g_squish";
-  return "g_grimace";
-}
-*/
-
 /**
- * Full-hero canvas plus a stage wrapper. Face pulling/grabbing is commented
- * out, while WebGL2 cobalt-disc + cutout rendering and cursor gaze tracking remain active.
+ * Desktop-only WebGL2 portrait canvas for subtle cursor gaze tracking.
+ * Skips initialization on mobile/touch/reduced-motion devices and consumes
+ * pre-cut transparent WebP textures directly without main-thread BFS processing.
  */
-export function FaceCanvas({ stageRef, discColor, onMood, onAvatarReady }: Props) {
+export function FaceCanvas({ stageRef, discColor, onMood, onReady }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const hitRef = useRef<HTMLDivElement>(null);
-  // const ringRef = useRef<HTMLDivElement>(null);
   const onMoodRef = useRef(onMood);
   onMoodRef.current = onMood;
-  const onAvatarReadyRef = useRef(onAvatarReady);
-  onAvatarReadyRef.current = onAvatarReady;
-  const [failed, setFailed] = useState(false);
+  const onReadyRef = useRef(onReady);
+  onReadyRef.current = onReady;
 
   useEffect(() => {
+    const isMobileOrReduced = window.matchMedia(
+      "(max-width: 767px), (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce)",
+    ).matches;
+    if (isMobileOrReduced) return;
+
     const canvas = canvasRef.current!;
     const hit = hitRef.current!;
-    // const ring = ringRef.current!;
     let engine: FaceEngine | null = null;
     let disposed = false;
     const cleanups: (() => void)[] = [];
@@ -88,24 +82,17 @@ export function FaceCanvas({ stageRef, discColor, onMood, onAvatarReady }: Props
       const loadedEntries = await Promise.all(
         uniqueSrcs.map(async (src) => {
           const img = await load(src);
-          return [src, img ? makePortraitCutout(img, 1024) : null] as const;
+          if (!img) return [src, null] as const;
+          // Pre-cut transparent WebP assets bypass runtime 1024x1024 BFS flood fill.
+          const cutout: TexImageSource = src.endsWith(".webp") ? img : makePortraitCutout(img, 1024);
+          return [src, cutout] as const;
         }),
       );
       if (disposed) return;
 
-      const bySrc = new Map<string, HTMLCanvasElement | null>(loadedEntries);
+      const bySrc = new Map<string, TexImageSource | null>(loadedEntries);
       const baseCutout = bySrc.get(faces.base.src);
-      if (!baseCutout) return setFailed(true);
-
-      // Share a lightweight cutout PNG for the header avatar disc.
-      try {
-        const av = document.createElement("canvas");
-        av.width = av.height = 128;
-        av.getContext("2d")!.drawImage(baseCutout, 0, 0, 128, 128);
-        onAvatarReadyRef.current?.(av.toDataURL("image/png"));
-      } catch {
-        /* ignore canvas export errors */
-      }
+      if (!baseCutout) return;
 
       const images = new Map<string, TexImageSource>();
       const available = new Set<FaceKey>();
@@ -118,21 +105,23 @@ export function FaceCanvas({ stageRef, discColor, onMood, onAvatarReady }: Props
       try {
         engine = new FaceEngine(canvas, images, "base", discColor);
       } catch {
-        return setFailed(true);
+        return;
       }
       const e = engine;
       layout();
       e.start();
       e.warm();
 
+      const readyRaf = requestAnimationFrame(() => {
+        if (!disposed) onReadyRef.current?.();
+      });
+
       // --- director -------------------------------------------------------
       let face: FaceKey = "base";
       let mode: "neutral" | "held" | "after" = "neutral";
       const afterAt = 0;
       const pulls = 0;
-      // let lastRelease: FaceKey | null = null;
       let cursor: { x: number; y: number } | null = null;
-      // const downs = new Map<number, { t: number; x: number; y: number; moved: number; u: number; v: number }>();
       let reported = "";
 
       const report = () => {
@@ -178,85 +167,6 @@ export function FaceCanvas({ stageRef, discColor, onMood, onAvatarReady }: Props
         return { x: ev.clientX - c.left, y: ev.clientY - c.top };
       };
 
-      /*
-      const setRing = (ev: PointerEvent, over: boolean) => {
-        if (ev.pointerType !== "mouse") return;
-        ring.style.transform = `translate3d(${ev.clientX}px, ${ev.clientY}px, 0)`;
-        const on = over || e.held;
-        ring.dataset.on = on ? "1" : "";
-        ring.dataset.held = e.held ? "1" : "";
-        hit.style.cursor = on ? "none" : "";
-      };
-
-      const onDown = (ev: PointerEvent) => {
-        layout();
-        const p = local(ev);
-        const at = e.pick(p.x, p.y);
-        if (!at) return;
-        ev.preventDefault();
-        hit.setPointerCapture(ev.pointerId);
-        e.grab(ev.pointerId, at.u, at.v, p.x, p.y);
-        downs.set(ev.pointerId, { t: performance.now(), x: p.x, y: p.y, moved: 0, u: at.u, v: at.v });
-        if (downs.size === 1) show(grabFace(at.u, at.v));
-        mode = "held";
-        setRing(ev, true);
-      };
-
-      const onMove = (ev: PointerEvent) => {
-        const p = local(ev);
-        const d = downs.get(ev.pointerId);
-        if (d) {
-          d.moved = Math.max(d.moved, Math.hypot(p.x - d.x, p.y - d.y));
-          e.drag(ev.pointerId, p.x, p.y);
-        }
-        setRing(ev, !!e.pick(p.x, p.y));
-      };
-
-      const onUp = (ev: PointerEvent) => {
-        const d = downs.get(ev.pointerId);
-        if (!d) return;
-        downs.delete(ev.pointerId);
-        e.release(ev.pointerId);
-        setRing(ev, !!e.pick(local(ev).x, local(ev).y));
-        if (downs.size) return;
-        const tap = performance.now() - d.t < 240 && d.moved < 8;
-        if (tap) {
-          e.poke(d.u, d.v);
-          show("x_shock");
-        } else {
-          pulls += 1;
-          let next: FaceKey;
-          if (e.flush > 0.8) next = "x_dizzy";
-          else {
-            const pool = releaseFaces.filter((k) => k !== lastRelease && available.has(k));
-            next = pool.length ? pool[Math.floor(Math.random() * pool.length)] : "base";
-          }
-          lastRelease = next;
-          show(next);
-        }
-        mode = "after";
-        afterAt = performance.now();
-      };
-
-      // Touch: block page scroll only when the finger lands on the portrait.
-      const onTouchStart = (ev: TouchEvent) => {
-        const c = canvas.getBoundingClientRect();
-        const t = ev.touches[0];
-        if (t && e.pick(t.clientX - c.left, t.clientY - c.top)) ev.preventDefault();
-      };
-
-      const onLeave = () => {
-        ring.dataset.on = "";
-      };
-
-      hit.addEventListener("pointerdown", onDown);
-      hit.addEventListener("pointermove", onMove);
-      hit.addEventListener("pointerup", onUp);
-      hit.addEventListener("pointercancel", onUp);
-      hit.addEventListener("pointerleave", onLeave);
-      hit.addEventListener("touchstart", onTouchStart, { passive: false });
-      */
-
       const onWindowMove = (ev: PointerEvent) => {
         if (ev.pointerType !== "mouse") return;
         cursor = local(ev);
@@ -280,14 +190,7 @@ export function FaceCanvas({ stageRef, discColor, onMood, onAvatarReady }: Props
       io.observe(canvas);
 
       cleanups.push(() => {
-        /*
-        hit.removeEventListener("pointerdown", onDown);
-        hit.removeEventListener("pointermove", onMove);
-        hit.removeEventListener("pointerup", onUp);
-        hit.removeEventListener("pointercancel", onUp);
-        hit.removeEventListener("pointerleave", onLeave);
-        hit.removeEventListener("touchstart", onTouchStart);
-        */
+        cancelAnimationFrame(readyRaf);
         window.removeEventListener("pointermove", onWindowMove);
         window.clearInterval(timer);
         io.disconnect();
@@ -312,31 +215,9 @@ export function FaceCanvas({ stageRef, discColor, onMood, onAvatarReady }: Props
       <canvas ref={canvasRef} aria-hidden className="pointer-events-none absolute inset-0 z-20 h-full w-full" />
       <div
         ref={hitRef}
-        role="img"
-        aria-label="Ubaid Ur Rehman portrait"
+        aria-hidden
         className="pointer-events-none absolute z-30 select-none"
-      >
-        {failed && (
-          <>
-            <div
-              className="absolute rounded-full bg-disc"
-              style={{
-                left: `${(rig.disc.x - rig.disc.r) * 100}%`,
-                top: `${(rig.disc.y - rig.disc.r) * 100}%`,
-                width: `${rig.disc.r * 200}%`,
-                height: `${rig.disc.r * 200}%`,
-              }}
-            />
-            <img
-              src={faces.base.src}
-              alt="Ubaid Ur Rehman portrait"
-              referrerPolicy="no-referrer"
-              className="absolute inset-0 h-full w-full rounded-full object-cover"
-            />
-          </>
-        )}
-      </div>
-      {/* <div ref={ringRef} aria-hidden className="grab-ring" /> */}
+      />
     </>
   );
 }

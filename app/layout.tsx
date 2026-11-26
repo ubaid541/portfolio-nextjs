@@ -31,7 +31,14 @@ export default function RootLayout({
     <html lang="en" data-theme="dark" suppressHydrationWarning>
       <head>
         <meta name="theme-color" content="#0e1015" />
-        <link rel="preload" as="image" href="/images/hero_ubaid_real.jpg" />
+        <link
+          rel="preload"
+          as="image"
+          type="image/webp"
+          imageSrcSet="/images/hero_ubaid_mobile.webp 480w, /images/hero_ubaid_desktop.webp 768w"
+          imageSizes="(max-width: 767px) min(92vw, 540px), min(44vw, 76svh)"
+          fetchPriority="high"
+        />
         <link rel="preconnect" href="https://api.fontshare.com" />
         <link
           href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap"

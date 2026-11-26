@@ -8,7 +8,14 @@ import { Header } from "./components/Header";
 import { ProjectsSection } from "./components/ProjectsSection";
 import { FaceCanvas, type Mood } from "./face/FaceCanvas";
 import { useFitHeadline, useTheme } from "./hooks/use-ui-hooks";
-import { bio, faces, person, stackStrip } from "./lib/portfolio-content";
+import {
+  bio,
+  faces,
+  HERO_PORTRAIT_MOBILE_SRC,
+  HERO_PORTRAIT_SRC,
+  person,
+  stackStrip,
+} from "./lib/portfolio-content";
 
 const DISC = "#2f4bf0";
 
@@ -80,15 +87,15 @@ export default function Home() {
   const title = useFitHeadline<HTMLHeadingElement>();
   const stageRef = useRef<HTMLDivElement>(null);
   const [mood, setMood] = useState<Mood>({ face: "base", patience: 100, pulls: 0 });
-  const [avatarSrc, setAvatarSrc] = useState<string | null>(null);
+  const [webglReady, setWebglReady] = useState(false);
   const onMood = useCallback((m: Mood) => setMood(m), []);
-  const onAvatarReady = useCallback((url: string) => setAvatarSrc(url), []);
+  const onWebglReady = useCallback(() => setWebglReady(true), []);
 
   return (
     <div id="top" className="min-h-[100svh] bg-page text-ink">
       {/* Full-viewport interactive hero frame */}
       <div className="flex min-h-[100svh] flex-col">
-        <Header dark={dark} onToggle={toggle} avatarSrc={avatarSrc} />
+        <Header dark={dark} onToggle={toggle} />
 
         <main className="relative isolate flex flex-1 flex-col px-[clamp(16px,2.4vw,36px)] pt-[clamp(20px,5vh,52px)] text-center">
           <h1 ref={title} className="headline relative z-0 inline-block text-[20vw] md:whitespace-nowrap">
@@ -99,8 +106,35 @@ export default function Home() {
           <div className="relative mx-auto grid w-full max-w-[1380px] flex-1 grid-cols-1 items-end gap-x-8 gap-y-8 text-left md:grid-cols-[1fr_auto_1fr]">
             <div
               ref={stageRef}
-              className="stage relative mx-auto aspect-square w-[min(92vw,540px)] md:order-2 md:w-[min(44vw,76svh)]"
+              className="stage relative z-[5] mx-auto aspect-square w-[min(92vw,540px)] md:order-2 md:w-[min(44vw,76svh)]"
             >
+              <svg aria-hidden className="pointer-events-none absolute size-0">
+                <defs>
+                  <clipPath id="hero-disc-clip" clipPathUnits="objectBoundingBox">
+                    <path d="M 0,0 H 1 V 0.58 H 0.91 A 0.41,0.41 0 0,1 0.09,0.58 H 0 Z" />
+                  </clipPath>
+                </defs>
+              </svg>
+
+              <div className={webglReady ? "pointer-events-none invisible" : "pointer-events-none"}>
+                <div
+                  className="absolute rounded-full bg-disc"
+                  style={{ left: "9%", top: "17%", width: "82%", height: "82%" }}
+                />
+                <img
+                  src={HERO_PORTRAIT_SRC}
+                  srcSet={`${HERO_PORTRAIT_MOBILE_SRC} 480w, ${HERO_PORTRAIT_SRC} 768w`}
+                  sizes="(max-width: 767px) min(92vw, 540px), min(44vw, 76svh)"
+                  alt="Ubaid Ur Rehman portrait"
+                  width={768}
+                  height={768}
+                  loading="eager"
+                  decoding="sync"
+                  fetchPriority="high"
+                  className="absolute inset-0 h-full w-full select-none object-contain"
+                  style={{ clipPath: "url(#hero-disc-clip)" }}
+                />
+              </div>
               {/*
               <p
                 className={`hint pointer-events-none absolute top-[22%] right-[-2%] rotate-6 font-serif text-[clamp(17px,1.45vw,22px)] italic md:right-[-8%] ${
@@ -139,7 +173,7 @@ export default function Home() {
             </div>
           </div>
 
-          <FaceCanvas stageRef={stageRef} discColor={DISC} onMood={onMood} onAvatarReady={onAvatarReady} />
+          <FaceCanvas stageRef={stageRef} discColor={DISC} onMood={onMood} onReady={onWebglReady} />
         </main>
 
         {/* Core stack wordmark strip */}

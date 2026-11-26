@@ -57,7 +57,9 @@ export const stackStrip = [
   { name: "MongoDB", font: "font-serif font-medium" },
 ];
 
-export const HERO_PORTRAIT_SRC = "/images/hero_ubaid_real.jpg";
+export const HERO_PORTRAIT_SRC = "/images/hero_ubaid_desktop.webp";
+export const HERO_PORTRAIT_MOBILE_SRC = "/images/hero_ubaid_mobile.webp";
+export const HERO_AVATAR_SRC = "/images/hero_ubaid_avatar.webp";
 
 /**
  * Mood & expression catalogue. Every expression drives both the mood readout
