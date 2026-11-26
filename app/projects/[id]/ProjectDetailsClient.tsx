@@ -1,687 +1,375 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
 import {
-  ChevronRight,
-  ExternalLink,
-  Github,
-  CheckCircle2,
+  ArrowUpRight,
+  Check,
   ChevronLeft,
-  ChevronRight as ChevronRightIcon,
-  Code2,
-  Menu,
+  ChevronRight,
   X,
 } from "lucide-react";
-import { Badge } from "../../component/components/ui/Badge";
-import { Button } from "../../component/components/ui/Button";
-import { Card, CardContent } from "../../component/components/ui/Card";
+import { Header } from "../../components/Header";
+import { useTheme } from "../../hooks/use-ui-hooks";
+import { person } from "../../lib/portfolio-content";
 import type { Project } from "../../data/portfolio-data";
 
-/* ──────────────────────────────────────────────────────────────
-   NAVBAR  (aligned with site's existing Navbar style)
-────────────────────────────────────────────────────────────── */
-function DetailNavbar() {
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  const navLinks = [
-    { label: "Projects", href: "/#projects" },
-    { label: "About", href: "/#about" },
-    { label: "Contact", href: "/#contact" },
-  ];
-
-  return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50 py-3">
-      <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-        {/* Brand */}
-        <Link href="/" className="flex items-center gap-2 group cursor-pointer">
-          <div className="bg-primary/10 p-2 rounded-lg group-hover:bg-primary/20 transition-colors">
-            <Code2 className="w-6 h-6 text-primary" />
-          </div>
-          <span className="font-heading font-bold text-xl tracking-tight">
-            Ubaid<span className="text-primary">.dev</span>
-          </span>
-        </Link>
-
-        {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-            >
-              {link.label}
-            </Link>
-          ))}
-          <div className="h-4 w-px bg-border mx-2" />
-          <Button
-            className="rounded-full px-6 bg-white text-black hover:bg-gray-200"
-            onClick={() =>
-              window.open("/ubaid_ur_rehman_resume.pdf", "_blank")
-            }
-          >
-            Resume
-          </Button>
-        </div>
-
-        {/* Mobile toggle */}
-        <button
-          className="md:hidden p-2 text-foreground hover:text-primary transition-colors"
-          onClick={() => setMobileOpen((o) => !o)}
-        >
-          {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-      </div>
-
-      {/* Mobile menu */}
-      {mobileOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-background border-b border-border p-4">
-          <div className="flex flex-col gap-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="text-lg font-medium text-muted-foreground hover:text-primary py-2 border-b border-border/50 last:border-0"
-              >
-                {link.label}
-              </Link>
-            ))}
-            <Button
-              className="w-full mt-2"
-              onClick={() =>
-                window.open("/ubaid_ur_rehman_resume.pdf", "_blank")
-              }
-            >
-              Download Resume
-            </Button>
-          </div>
-        </div>
-      )}
-    </nav>
-  );
-}
-
-/* ──────────────────────────────────────────────────────────────
-   IMAGE CAROUSEL
-────────────────────────────────────────────────────────────── */
 function ImageCarousel({
   screenshots,
+  title,
   onImageClick,
 }: {
   screenshots: string[];
+  title: string;
   onImageClick: (index: number) => void;
 }) {
   const [current, setCurrent] = useState(0);
 
-  const prev = () =>
-    setCurrent((c) => (c - 1 + screenshots.length) % screenshots.length);
-  const next = () =>
-    setCurrent((c) => (c + 1) % screenshots.length);
+  const prev = () => setCurrent((c) => (c - 1 + screenshots.length) % screenshots.length);
+  const next = () => setCurrent((c) => (c + 1) % screenshots.length);
 
   if (screenshots.length === 0) return null;
 
   return (
-    <div className="relative w-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-secondary/30 group">
-      {/* Clickable image — opens lightbox */}
-      <motion.img
-        key={current}
+    <div className="group relative aspect-video w-full overflow-hidden rounded-2xl border border-line bg-surface">
+      <img
         src={screenshots[current]}
-        alt={`Screenshot ${current + 1}`}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.4 }}
-        className="w-full object-cover cursor-zoom-in"
-        style={{ maxHeight: "420px", objectFit: "cover" }}
+        alt={`${title} screenshot ${current + 1}`}
         onClick={() => onImageClick(current)}
+        className="h-full w-full cursor-zoom-in object-cover"
       />
 
-      {/* Zoom hint badge */}
-      <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
+      <span className="pointer-events-none absolute top-4 right-4 rounded-full bg-ink/75 px-3 py-1 text-[11px] font-medium text-page opacity-0 transition-opacity group-hover:opacity-100">
         Click to expand
-      </div>
+      </span>
 
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent pointer-events-none" />
-
-      {/* Prev / Next arrows — only shown if more than 1 screenshot */}
       {screenshots.length > 1 && (
         <>
           <button
-            onClick={(e) => { e.stopPropagation(); prev(); }}
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-background/70 backdrop-blur-sm border border-white/10 rounded-full p-2 text-foreground hover:text-primary hover:border-primary/50 transition-all opacity-0 group-hover:opacity-100"
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              prev();
+            }}
+            aria-label="Previous screenshot"
+            className="absolute top-1/2 left-4 -translate-y-1/2 cursor-pointer rounded-full border border-line bg-page/85 p-2.5 text-ink backdrop-blur-sm transition-colors hover:bg-ink hover:text-page"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ChevronLeft className="size-4" />
           </button>
           <button
-            onClick={(e) => { e.stopPropagation(); next(); }}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-background/70 backdrop-blur-sm border border-white/10 rounded-full p-2 text-foreground hover:text-primary hover:border-primary/50 transition-all opacity-0 group-hover:opacity-100"
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              next();
+            }}
+            aria-label="Next screenshot"
+            className="absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer rounded-full border border-line bg-page/85 p-2.5 text-ink backdrop-blur-sm transition-colors hover:bg-ink hover:text-page"
           >
-            <ChevronRightIcon className="w-5 h-5" />
+            <ChevronRight className="size-4" />
           </button>
-        </>
-      )}
 
-      {/* Dots */}
-      {screenshots.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-          {screenshots.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrent(i)}
-              className={`w-2 h-2 rounded-full transition-all ${
-                i === current
-                  ? "bg-primary w-6"
-                  : "bg-white/40 hover:bg-white/70"
-              }`}
-            />
-          ))}
-        </div>
+          <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2 rounded-full bg-page/85 px-3 py-1.5 backdrop-blur-sm">
+            {screenshots.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setCurrent(i)}
+                aria-label={`View screenshot ${i + 1}`}
+                className={`h-2 cursor-pointer rounded-full transition-all ${
+                  i === current ? "w-6 bg-disc" : "w-2 bg-ink/30 hover:bg-ink/60"
+                }`}
+              />
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
 }
 
-/* ──────────────────────────────────────────────────────────────
-   FOOTER (aligned with site Footer)
-────────────────────────────────────────────────────────────── */
-function DetailFooter() {
-  const currentYear = new Date().getFullYear();
-  return (
-    <footer className="bg-card border-t border-border py-12 mt-24">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="text-center md:text-left">
-            <h3 className="font-heading font-bold text-xl mb-2">
-              Ubaid Ur Rehman
-            </h3>
-            <p className="text-muted-foreground text-sm max-w-xs">
-              Building scalable digital experiences with React, Node.js, and
-              modern web technologies.
-            </p>
-          </div>
-          <div className="flex gap-4 text-sm text-muted-foreground">
-            <a
-              href="https://linkedin.com/in/ubaid-ur-rehman-se"
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-primary transition-colors"
-            >
-              LinkedIn
-            </a>
-            <a
-              href="https://github.com/ubaid541"
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-primary transition-colors"
-            >
-              GitHub
-            </a>
-            <a
-              href="mailto:ubaidrehmanse@gmail.com"
-              className="hover:text-primary transition-colors"
-            >
-              Email
-            </a>
-          </div>
-        </div>
-        <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
-          <p>© {currentYear} Ubaid Ur Rehman. All rights reserved.</p>
-          <p className="mt-2 md:mt-0">Designed & Built with ❤️</p>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
-/* ──────────────────────────────────────────────────────────────
-   MAIN COMPONENT
-────────────────────────────────────────────────────────────── */
 interface Props {
   project: Project;
   otherProjects: Project[];
 }
 
-export default function ProjectDetailsClient({ project, otherProjects }: Props) {
+export default function ProjectDetailsClient({ project }: Props) {
+  const [dark, toggle] = useTheme();
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const currentYear = new Date().getFullYear();
+
+  const screenshots = project.screenshots?.length ? project.screenshots : [project.imageUrl];
 
   const lightboxPrev = () =>
-    setLightboxIndex((i) =>
-      i === null ? null : (i - 1 + project.screenshots.length) % project.screenshots.length
-    );
+    setLightboxIndex((i) => (i === null ? null : (i - 1 + screenshots.length) % screenshots.length));
   const lightboxNext = () =>
-    setLightboxIndex((i) =>
-      i === null ? null : (i + 1) % project.screenshots.length
-    );
+    setLightboxIndex((i) => (i === null ? null : (i + 1) % screenshots.length));
 
-  // Close lightbox on Escape key
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") setLightboxIndex(null);
+      if (lightboxIndex !== null && screenshots.length > 1) {
+        if (e.key === "ArrowLeft") lightboxPrev();
+        if (e.key === "ArrowRight") lightboxNext();
+      }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, []);
+  });
 
   return (
-    <div className="min-h-screen bg-background">
-      <DetailNavbar />
+    <div id="top" className="min-h-screen bg-page text-ink">
+      <Header dark={dark} onToggle={toggle} avatarSrc={null} isSubpage />
 
-      <main className="pt-20">
-        {/* ── HEADER SECTION ──────────────────────────────────── */}
-        <section className="py-12 border-b border-border/50">
-          <div className="container mx-auto px-4 md:px-6">
-            {/* Breadcrumbs */}
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="flex items-center gap-2 text-sm text-muted-foreground mb-6"
-            >
-              <Link href="/" className="hover:text-primary transition-colors">
+      <main className="px-[clamp(16px,2.4vw,36px)]">
+        <div className="mx-auto max-w-[1380px]">
+          {/* Header Section */}
+          <section className="border-b border-line py-12 md:py-16">
+            <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-[13px] text-mute">
+              <Link href="/#projects" className="transition-colors hover:text-ink">
                 Projects
               </Link>
-              <ChevronRight className="w-4 h-4" />
-              <span className="text-foreground">{project.title}</span>
-            </motion.div>
+              <ChevronRight className="size-3.5" aria-hidden />
+              <span className="font-medium text-ink">{project.title}</span>
+            </nav>
 
-            {/* Title */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4">
-                {project.title}
-              </h1>
-              <p className="text-lg text-muted-foreground max-w-2xl">
-                {project.subtitle}
-              </p>
-            </motion.div>
-          </div>
-        </section>
+            <h1 className="font-display text-[clamp(2rem,4vw,3.5rem)] font-bold leading-[1.06] tracking-[-0.03em] text-ink">
+              {project.title}
+            </h1>
+            <p className="mt-4 max-w-2xl text-[16px] leading-relaxed text-mute">{project.subtitle}</p>
+          </section>
 
-        {/* ── CAROUSEL ────────────────────────────────────────── */}
-        <section className="py-8">
-          <div className="container mx-auto px-4 md:px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              <ImageCarousel
-                screenshots={project.screenshots}
-                onImageClick={(idx) => setLightboxIndex(idx)}
-              />
-            </motion.div>
-          </div>
-        </section>
+          {/* Carousel */}
+          <section className="py-10">
+            <ImageCarousel
+              screenshots={screenshots}
+              title={project.title}
+              onImageClick={(idx) => setLightboxIndex(idx)}
+            />
+          </section>
 
-        {/* ── TWO-COLUMN CONTENT ──────────────────────────────── */}
-        <section className="py-12">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="grid lg:grid-cols-3 gap-10">
+          {/* Two-Column Content */}
+          <section className="border-t border-line py-12 md:py-16">
+            <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
+              {/* Left Column */}
+              <div className="space-y-10 lg:col-span-8">
+                <div>
+                  <h2 className="font-display text-sm font-bold uppercase tracking-[0.06em] text-mute">
+                    Overview
+                  </h2>
+                  <p className="mt-3 text-[16px] leading-relaxed text-ink/90">{project.longDescription}</p>
+                </div>
 
-              {/* ── LEFT COLUMN ─────────────────────────────── */}
-              <div className="lg:col-span-2 space-y-10">
-
-                {/* Project Description */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <p className="text-muted-foreground leading-relaxed">
-                    {project.longDescription}
-                  </p>
-                </motion.div>
-
-                {/* The Challenge */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.05 }}
-                >
-                  <Card className="bg-card border-border/50">
-                    <CardContent className="p-8">
-                      <h2 className="text-2xl font-heading font-bold mb-4 flex items-center gap-3">
-                        <span className="text-xl">🎯</span> The Challenge
-                      </h2>
-                      <p className="text-muted-foreground leading-relaxed mb-4">
-                        {project.challenge.description}
+                <div className="grid grid-cols-1 gap-8 border-y border-line py-8 md:grid-cols-2">
+                  <div>
+                    <h2 className="font-display text-lg font-bold tracking-[-0.015em] text-ink">
+                      The Challenge
+                    </h2>
+                    <p className="mt-3 text-[15px] leading-relaxed text-mute">
+                      {project.challenge.description}
+                    </p>
+                    {project.challenge.hurdles && (
+                      <p className="mt-3 text-[15px] leading-relaxed text-mute">
+                        {project.challenge.hurdles}
                       </p>
-                      {project.challenge.hurdles && (
-                        <p className="text-muted-foreground leading-relaxed">
-                          {project.challenge.hurdles}
-                        </p>
-                      )}
-                    </CardContent>
-                  </Card>
-                </motion.div>
+                    )}
+                  </div>
 
-                {/* The Solution */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                >
-                  <Card className="bg-card border-border/50">
-                    <CardContent className="p-8">
-                      <h2 className="text-2xl font-heading font-bold mb-4 flex items-center gap-3">
-                        <span className="text-xl">⚡</span> The Solution
-                      </h2>
-                      <p className="text-muted-foreground leading-relaxed mb-6">
-                        {project.solution.description}
-                      </p>
-                      {project.solution.features.length > 0 && (
-                        <div className="grid sm:grid-cols-2 gap-4">
-                          {project.solution.features.map((feature) => (
-                            <div
-                              key={feature.title}
-                              className="flex items-start gap-3"
-                            >
-                              <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                              <div>
-                                <p className="font-semibold text-sm">
-                                  {feature.title}
-                                </p>
-                                <p className="text-muted-foreground text-sm">
-                                  {feature.description}
-                                </p>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
-                </motion.div>
-
-                {/* Key Features */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.15 }}
-                >
-                  <Card className="bg-card border-border/50">
-                    <CardContent className="p-8">
-                      <h2 className="text-2xl font-heading font-bold mb-6">
-                        Key Features
-                      </h2>
-                      <ul className="space-y-3">
-                        {project.keyFeatures.map((feature) => (
-                          <li
-                            key={feature}
-                            className="flex items-start gap-3 text-muted-foreground"
-                          >
-                            <span className="text-primary mt-1 flex-shrink-0">◆</span>
-                            {feature}
-                          </li>
+                  <div>
+                    <h2 className="font-display text-lg font-bold tracking-[-0.015em] text-ink">
+                      The Solution
+                    </h2>
+                    <p className="mt-3 text-[15px] leading-relaxed text-mute">
+                      {project.solution.description}
+                    </p>
+                    {project.solution.features.length > 0 && (
+                      <div className="mt-5 space-y-3 border-t border-line pt-4">
+                        {project.solution.features.map((feature) => (
+                          <div key={feature.title}>
+                            <p className="text-[14px] font-semibold text-ink">{feature.title}</p>
+                            <p className="mt-0.5 text-[13px] leading-relaxed text-mute">
+                              {feature.description}
+                            </p>
+                          </div>
                         ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
-                </motion.div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                  <h2 className="font-display text-lg font-bold tracking-[-0.015em] text-ink">
+                    Key Features
+                  </h2>
+                  <ul className="mt-4 space-y-3">
+                    {project.keyFeatures.map((feature) => (
+                      <li key={feature} className="flex items-start gap-3 text-[15px] leading-relaxed text-mute">
+                        <Check className="mt-1 size-4 shrink-0 text-disc" aria-hidden />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
 
-              {/* ── RIGHT SIDEBAR ────────────────────────────── */}
-              <div className="space-y-6">
-
-                {/* CTA Buttons — conditional on links existing */}
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  className="space-y-3"
-                >
-                  {project.link && project.link !== "" ? (
-                    <Button
-                      className="w-full h-12 bg-primary hover:bg-primary/90 text-white rounded-lg gap-2"
-                      onClick={() => window.open(project.link!, "_blank")}
+              {/* Right Sidebar */}
+              <aside className="space-y-6 lg:col-span-4">
+                <div className="space-y-3">
+                  {project.link ? (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-disc px-6 text-[13px] font-semibold text-white transition-opacity hover:opacity-90"
                     >
-                      <ExternalLink className="w-4 h-4" /> Live Demo
-                    </Button>
+                      <span>Live Demo</span>
+                      <ArrowUpRight className="size-4" />
+                    </a>
                   ) : (
-                    <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20 text-orange-200 text-sm leading-relaxed">
-                      <strong className="text-orange-400 block mb-1">Proprietary Product</strong>
-                      Due to company confidentiality, a live demo is not available. Please refer to the provided screenshots and details.
+                    <div className="rounded-2xl border border-line bg-surface p-5 text-[14px] leading-relaxed text-mute">
+                      <strong className="mb-1 block font-display text-ink">Proprietary Product</strong>
+                      Due to company confidentiality, a live demo is not available. Please refer to the provided
+                      screenshots and details.
                     </div>
                   )}
+
                   {project.githubLink && (
-                    <Button
-                      variant="outline"
-                      className="w-full h-12 border-border/70 gap-2 rounded-lg"
-                      onClick={() => window.open(project.githubLink!, "_blank")}
+                    <a
+                      href={project.githubLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full border border-line bg-field px-6 text-[13px] font-semibold text-ink transition-colors hover:border-ink"
                     >
-                      <Github className="w-4 h-4" /> GitHub Repository
-                    </Button>
+                      <span>GitHub Repository</span>
+                      <ArrowUpRight className="size-4" />
+                    </a>
                   )}
-                </motion.div>
+                </div>
 
-                {/* Project Details Card */}
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.25 }}
-                >
-                  <Card className="bg-card border-border/50">
-                    <CardContent className="p-6 space-y-4">
-                      {/* Client
-                      <div className="flex justify-between items-center text-sm border-b border-border/40 pb-4">
-                        <span className="text-muted-foreground uppercase tracking-wider text-xs font-semibold">
-                          Client
-                        </span>
-                        <span className="font-medium text-right">
-                          {project.details.client}
-                        </span>
-                      </div>
-                      */}
-                      {/* Duration
-                      <div className="flex justify-between items-center text-sm border-b border-border/40 pb-4">
-                        <span className="text-muted-foreground uppercase tracking-wider text-xs font-semibold">
-                          Duration
-                        </span>
-                        <span className="font-medium">
-                          {project.details.duration}
-                        </span>
-                      </div>
-                      */}
-                      {/* Role */}
-                      <div className="flex justify-between items-center text-sm border-b border-border/40 pb-4">
-                        <span className="text-muted-foreground uppercase tracking-wider text-xs font-semibold">
-                          Role
-                        </span>
-                        <span className="font-medium text-right">
-                          {project.details.role}
-                        </span>
-                      </div>
+                <div className="rounded-2xl border border-line bg-surface p-6 space-y-5">
+                  <div className="flex items-center justify-between border-b border-line pb-4 text-[14px]">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-mute">Role</span>
+                    <span className="font-medium text-ink">{project.details.role}</span>
+                  </div>
 
-                      {/* Tech Stack */}
-                      <div className="pt-2">
-                        <span className="text-muted-foreground uppercase tracking-wider text-xs font-semibold block mb-3">
-                          Tech Stack
+                  <div>
+                    <span className="block font-mono text-[11px] uppercase tracking-[0.08em] text-mute">
+                      Tech Stack
+                    </span>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {project.techStack.map((tech) => (
+                        <span
+                          key={tech}
+                          className="rounded-lg border border-line bg-field px-3 py-1.5 font-mono text-[12px] text-ink"
+                        >
+                          {tech}
                         </span>
-                        <div className="flex flex-wrap gap-2">
-                          {project.techStack.map((tech) => (
-                            <Badge
-                              key={tech}
-                              className="bg-primary/20 text-primary border-primary/30 hover:bg-primary/30 transition-colors"
-                            >
-                              {tech}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-
-                {/*
-                  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-                  PERFORMANCE METRICS — temporarily commented out
-                  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                >
-                  <Card className="bg-card border-border/50">
-                    <CardContent className="p-6">
-                      <span className="text-muted-foreground uppercase tracking-wider text-xs font-semibold block mb-4">
-                        Performance Metrics
-                      </span>
-                      <div className="space-y-4">
-                        <div>
-                          <div className="flex justify-between text-sm mb-1">
-                            <span>Lighthouse Score</span>
-                            <span className="font-bold text-primary">
-                              {project.performanceMetrics.lighthouseScore}%
-                            </span>
-                          </div>
-                          <div className="w-full h-2 bg-secondary rounded-full overflow-hidden">
-                            <motion.div
-                              initial={{ width: 0 }}
-                              animate={{ width: `${project.performanceMetrics.lighthouseScore}%` }}
-                              transition={{ duration: 1, delay: 0.5 }}
-                              className="h-full bg-primary rounded-full"
-                            />
-                          </div>
-                        </div>
-                        <div className="flex justify-between text-sm">
-                          <span>Core Web Vitals</span>
-                          <span className="font-bold text-green-400">
-                            {project.performanceMetrics.coreWebVitals}
-                          </span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-                */}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/*
-          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          MORE PROJECTS SECTION — temporarily commented out
-          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-        <section className="py-16 border-t border-border/50">
-          <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-2xl font-heading font-bold mb-8">More Projects</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {otherProjects.map((p, i) => (
-                <Link key={p.id} href={`/projects/${p.id}`}>
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    className="group rounded-xl overflow-hidden border border-border/50 bg-secondary/20 hover:border-primary/50 transition-all duration-300 cursor-pointer"
-                  >
-                    <div className="aspect-video overflow-hidden">
-                      <img
-                        src={p.imageUrl}
-                        alt={p.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
+                      ))}
                     </div>
-                    <div className="p-4">
-                      <h3 className="font-heading font-bold mb-1 group-hover:text-primary transition-colors">
-                        {p.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground line-clamp-2">
-                        {p.description}
-                      </p>
-                    </div>
-                  </motion.div>
+                  </div>
+                </div>
+
+                <Link
+                  href="/#projects"
+                  className="inline-flex items-center gap-2 text-[13px] font-semibold text-ink transition-colors hover:text-disc"
+                >
+                  <span aria-hidden>←</span>
+                  <span>Back to all projects</span>
                 </Link>
-              ))}
+              </aside>
             </div>
-          </div>
-        </section>
-        */}
+          </section>
+        </div>
       </main>
 
-      <DetailFooter />
-
-      {/* ── LIGHTBOX OVERLAY ─────────────────────────────────────── */}
-      <AnimatePresence>
-        {lightboxIndex !== null && (
-          <motion.div
-            key="lightbox-backdrop"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-[200] bg-black/85 backdrop-blur-md cursor-zoom-out"
-            onClick={() => setLightboxIndex(null)}
-          >
-            {/* Centered image — stops propagation so only true backdrop clicks close */}
-            <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-8 pointer-events-none">
-              <motion.img
-                key={lightboxIndex}
-                src={project.screenshots[lightboxIndex]}
-                alt={`Screenshot ${lightboxIndex + 1}`}
-                initial={{ opacity: 0, scale: 0.92 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.92 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-                className="max-w-full max-h-[88vh] w-auto h-auto object-contain rounded-xl shadow-2xl ring-1 ring-white/10 pointer-events-auto cursor-default"
-                onClick={(e) => e.stopPropagation()}
-                style={{ imageRendering: "auto" }}
-              />
-            </div>
-
-            {/* Close button */}
-            <button
-              onClick={(e) => { e.stopPropagation(); setLightboxIndex(null); }}
-              className="absolute top-4 right-4 md:top-6 md:right-6 bg-black/60 hover:bg-black/80 border border-white/20 rounded-full p-2.5 text-white transition-all hover:scale-110 z-10"
-              aria-label="Close lightbox"
+      <footer className="border-t border-line px-[clamp(16px,2.4vw,36px)] py-7">
+        <div className="mx-auto flex max-w-[1380px] flex-col items-start justify-between gap-4 text-[13px] text-mute sm:flex-row sm:items-center">
+          <p>© {currentYear} {person.fullName}. All rights reserved.</p>
+          <div className="flex flex-wrap items-center gap-6">
+            <Link href="/" className="transition-colors hover:text-ink">
+              Home
+            </Link>
+            <a href={person.github} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-ink">
+              GitHub
+            </a>
+            <a
+              href={person.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors hover:text-ink"
             >
-              <X className="w-5 h-5" />
-            </button>
+              LinkedIn
+            </a>
+            <a
+              href={person.resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors hover:text-ink"
+            >
+              Resume
+            </a>
+          </div>
+        </div>
+      </footer>
 
-            {/* Image counter pill */}
-            {project.screenshots.length > 1 && (
-              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full z-10">
-                {lightboxIndex + 1} / {project.screenshots.length}
+      {/* Lightbox Overlay */}
+      {lightboxIndex !== null && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Expanded screenshot"
+          onClick={() => setLightboxIndex(null)}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 p-4 backdrop-blur-md cursor-zoom-out sm:p-8"
+        >
+          <img
+            src={screenshots[lightboxIndex]}
+            alt={`${project.title} screenshot ${lightboxIndex + 1}`}
+            onClick={(e) => e.stopPropagation()}
+            className="max-h-[88vh] w-auto max-w-full cursor-default rounded-xl object-contain shadow-2xl"
+          />
+
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setLightboxIndex(null);
+            }}
+            aria-label="Close lightbox"
+            className="absolute top-4 right-4 cursor-pointer rounded-full border border-white/20 bg-black/60 p-2.5 text-white transition-transform hover:scale-110 md:top-6 md:right-6"
+          >
+            <X className="size-5" />
+          </button>
+
+          {screenshots.length > 1 && (
+            <>
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-black/60 px-3 py-1.5 text-xs text-white backdrop-blur-sm">
+                {lightboxIndex + 1} / {screenshots.length}
               </div>
-            )}
-
-            {/* Prev arrow */}
-            {project.screenshots.length > 1 && (
               <button
-                onClick={(e) => { e.stopPropagation(); lightboxPrev(); }}
-                className="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 border border-white/20 rounded-full p-3 text-white transition-all hover:scale-110 z-10"
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  lightboxPrev();
+                }}
                 aria-label="Previous image"
+                className="absolute top-1/2 left-3 -translate-y-1/2 cursor-pointer rounded-full border border-white/20 bg-black/60 p-3 text-white transition-transform hover:scale-110 md:left-6"
               >
-                <ChevronLeft className="w-5 h-5" />
+                <ChevronLeft className="size-5" />
               </button>
-            )}
-
-            {/* Next arrow */}
-            {project.screenshots.length > 1 && (
               <button
-                onClick={(e) => { e.stopPropagation(); lightboxNext(); }}
-                className="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 border border-white/20 rounded-full p-3 text-white transition-all hover:scale-110 z-10"
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  lightboxNext();
+                }}
                 aria-label="Next image"
+                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer rounded-full border border-white/20 bg-black/60 p-3 text-white transition-transform hover:scale-110 md:right-6"
               >
-                <ChevronRightIcon className="w-5 h-5" />
+                <ChevronRight className="size-5" />
               </button>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 }

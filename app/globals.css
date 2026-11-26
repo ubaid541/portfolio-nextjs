@@ -1,125 +1,152 @@
-/* @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-} */
-
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Cool fog page, near-black ink; electric cobalt disc and mustard marker accent. */
 :root {
-  --font-sans: 'Inter', sans-serif;
-  --font-heading: 'Space Grotesk', sans-serif;
+  --font-display: 'Satoshi', 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Fraunces', Georgia, serif;
+  --font-wide: 'Unbounded', 'Satoshi', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
 
-  /* Dark Theme Default */
-  --background: 224 71% 4%;
-  --foreground: 213 31% 91%;
-  
-  --card: 224 71% 4%;
-  --card-foreground: 213 31% 91%;
-  
-  --popover: 224 71% 4%;
-  --popover-foreground: 213 31% 91%;
-  
-  --primary: 263 70% 50%;
-  --primary-foreground: 210 40% 98%;
-  
-  --secondary: 222 47% 11%;
-  --secondary-foreground: 210 40% 98%;
-  
-  --muted: 223 47% 11%;
-  --muted-foreground: 215 20% 65%;
-  
-  --accent: 263 70% 50%;
-  --accent-foreground: 210 40% 98%;
-  
-  --destructive: 0 63% 31%;
-  --destructive-foreground: 210 40% 98%;
-  
-  --border: 216 34% 17%;
-  --input: 216 34% 17%;
-  --ring: 263 70% 50%;
-  
-  --radius: 0.75rem;
+  --page: #e8ebf1;
+  --page-rgb: 232 235 241;
+  --ink: #12141b;
+  --ink-rgb: 18 20 27;
+  --mute: #12141b99;
+  --line: #12141b1f;
+  --field: #f6f7fa;
+  --field-rgb: 246 247 250;
+  --surface: #f1f3f8;
+  --surface-rgb: 241 243 248;
+  --disc: #2f4bf0;
+  --disc-rgb: 47 75 240;
+  --sun: #f2b31b;
+  --sun-rgb: 242 179 27;
+  color-scheme: light;
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-    font-family: var(--font-sans);
-  }
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading);
-    @apply font-bold tracking-tight;
+:root[data-theme='dark'] {
+  --page: #0e1015;
+  --page-rgb: 14 16 21;
+  --ink: #eef0f5;
+  --ink-rgb: 238 240 245;
+  --mute: #eef0f5a3;
+  --line: #eef0f524;
+  --field: #171a21;
+  --field-rgb: 23 26 33;
+  --surface: #14171f;
+  --surface-rgb: 20 23 31;
+  color-scheme: dark;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+html {
+  background: var(--page);
+  color: var(--ink);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  font-family: var(--font-sans);
+  background: var(--page);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--disc);
+  outline-offset: 2px;
+}
+
+/* Satoshi Black, tracked in hard — reads as one architectural slab behind the head. */
+.headline {
+  font-family: var(--font-display);
+  font-weight: 900;
+  line-height: 0.84;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+
+/* Mustard highlighter stroke sitting cleanly on the lower half of the name. */
+.marker {
+  background: linear-gradient(transparent 52%, var(--sun) 52%, var(--sun) 92%, transparent 92%);
+  padding-inline: 0.04em;
+}
+
+/* Stage tucks up under the headline so the hair breaks cleanly over the type. */
+.stage {
+  margin-top: calc(var(--mega, 80px) * -0.26);
+}
+@media (min-width: 768px) {
+  .stage {
+    margin-top: calc(var(--mega, 160px) * -0.58);
   }
 }
 
-@layer utilities {
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/50;
-  }
-  .text-gradient-primary {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-400;
-  }
-  .glass-card {
-    @apply bg-card/50 backdrop-blur-md border border-white/5 shadow-xl;
-  }
-  .animate-in {
-    animation: fadeIn 0.8s ease-out forwards;
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  
-  @keyframes fadeIn {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+/* Grab cursor: a blend-mode ring that appears over the portrait and tightens while held. */
+.grab-ring {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 50;
+  pointer-events: none;
+}
+.grab-ring::before,
+.grab-ring::after {
+  content: '';
+  position: absolute;
+  border-radius: 999px;
+  transition:
+    transform 0.18s cubic-bezier(0.3, 1.6, 0.5, 1),
+    opacity 0.18s;
+  opacity: 0;
+}
+.grab-ring::before {
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border: 1.5px solid #fff;
+  mix-blend-mode: difference;
+  transform: scale(0.6);
+}
+.grab-ring::after {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: #fff;
+  mix-blend-mode: difference;
+}
+.grab-ring[data-on='1']::before,
+.grab-ring[data-on='1']::after {
+  opacity: 1;
+  transform: scale(1);
+}
+.grab-ring[data-held='1']::before {
+  transform: scale(0.62);
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
+.hint {
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
 }
 
-::-webkit-scrollbar-track {
-  background: hsl(var(--background));
-}
-
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--muted));
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--primary));
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .grab-ring::before,
+  .grab-ring::after,
+  .hint {
+    transition: none;
+  }
 }
